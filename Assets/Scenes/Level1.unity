@@ -1184,10 +1184,5 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 2051972193}
-    - target: {fileID: 8545145771917605718, guid: 025bb210ce75bdd4e8393cde4d7b531a,
-        type: 3}
-      propertyPath: playerAttackPower
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 025bb210ce75bdd4e8393cde4d7b531a, type: 3}
