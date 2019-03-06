@@ -3,6 +3,13 @@ guid: a06321f441e05a6429e832d144356976
 TextureImporter:
   fileIDToRecycleName:
     21300000: e1_idle_0
+    21300002: e1_idle_1
+    21300004: e1_idle_2
+    21300006: e1_idle_3
+    21300008: e1_idle_4
+    21300010: e1_idle_5
+    21300012: e1_idle_6
+    21300014: e1_idle_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -88,10 +95,10 @@ TextureImporter:
       name: e1_idle_0
       rect:
         serializedVersion: 2
-        x: 2478
-        y: 1
-        width: 372
-        height: 355
+        x: 0
+        y: 0
+        width: 356.25
+        height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,7 +106,147 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b930c72528f8fc84a81db5b2da017f41
+      spriteID: e861876b2850b7e47b8a3d67167cc8bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_1
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad46ac951c4ec345a3eb97fe3b04823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_2
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83a4260bfcb5a40488ea1c16d14c6d56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_3
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d89b48e29b093d24a852e0fc0b70725f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_4
+      rect:
+        serializedVersion: 2
+        x: 1424
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92da3a8bab0b3414d98b6091d97009dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_5
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87a2e868368c2b34abfbccbecc91beda
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_6
+      rect:
+        serializedVersion: 2
+        x: 2136
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce3a940fde4b33f419582d23b79a143d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: e1_idle_7
+      rect:
+        serializedVersion: 2
+        x: 2492
+        y: 0
+        width: 356.25
+        height: 365
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 481a04a58d1600645ab05d33d49fcdbe
       vertices: []
       indices: 
       edges: []

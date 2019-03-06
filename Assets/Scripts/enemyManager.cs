@@ -1,46 +1,35 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public int numOfEnemies = 5;
+    //public int minEnemies = 3;
+    //public int maxEnemies = 10;
+
+    //public int numOfEnemies = 0;
     public int startTime = 1;
-    public int delayTime = 100;
+    public int delayTime = 10;
+    public int matchTime = 8;
+
     private int playerId = 1;
-    public Transform spawnPoint;
-    public GameObject enemy;
+
+    public Transform[] spawnPoint;
+    public GameObject enemyPrefab;
     private bool waiting;
 
     // Use this for initialization
     void Start()
     {
-        waiting = true;
+        matchTime *= 60;
+        InvokeRepeating("SpawnEnemy", startTime, delayTime);
     }
 
     void SpawnEnemy()
     {
-        GameObject newEnemy = Instantiate(enemy, spawnPoint.position, Quaternion.identity);
+        int i = Random.Range(0, spawnPoint.Length);
+
+        GameObject newEnemy = Instantiate(enemyPrefab, spawnPoint[i].position, Quaternion.identity);
         newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
-        numOfEnemies--;
         playerId *= -1;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        while (numOfEnemies != 0)
-        {
-            InvokeRepeating("SpawnEnemy", startTime, delayTime);
-        }
-    }
-
-    IEnumerator waitTime()
-    {
-        Debug.Log("Coroutine started");
-        Debug.Log(Time.time);
-        yield return new WaitForSeconds(delayTime);
-        Debug.Log(Time.time);
-        //waiting = true;
     }
 }
