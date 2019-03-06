@@ -88,13 +88,13 @@ public class PlayerAttackRange : MonoBehaviour
 
                 }
             }
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.T))
             {
                 defenseMode = true;
                 animator.SetBool("defense", true);
                 Debug.Log("defenseMode ON");
             }
-            if (Input.GetKeyUp(KeyCode.D))
+            if (Input.GetKeyUp(KeyCode.T))
             {
                 Debug.Log("defenseMode OFF");
                 defenseMode = false;

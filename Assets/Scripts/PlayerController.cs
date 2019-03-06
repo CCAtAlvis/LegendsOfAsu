@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             isInAir = false;
             animator.SetBool("inAir", false);
         }
-        else if (!isInAir && !defenseMode)
+        else if (!isInAir)
         {
             Debug.Log("not in air");
             //float h = CrossPlatformInputManager.GetAxis("Horizontal");
