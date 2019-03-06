@@ -6,6 +6,8 @@ public class EnemyScript : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        enemyHealth -= damageAmount;
+
         //Debug.Log("enemy hit" + enemyHealth);
         if (enemyHealth <= 0)
         {
@@ -13,7 +15,5 @@ public class EnemyScript : MonoBehaviour
             //then destroy the game object
             Destroy(gameObject);
         }
-
-        enemyHealth -= damageAmount;
     }
 }

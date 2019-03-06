@@ -68,10 +68,10 @@ GameObject:
   - component: {fileID: 8545145771917605717}
   - component: {fileID: 8545145771917605714}
   - component: {fileID: 8545145771917605715}
-  - component: {fileID: 8545145771917605716}
-  - component: {fileID: 8545145771917605718}
   - component: {fileID: 8545145771917605719}
   - component: {fileID: 8545145771917605713}
+  - component: {fileID: 8545145771917605716}
+  - component: {fileID: 8545145771917605718}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -163,55 +163,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8545145771917605716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8545145771917605712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 581dfedefc1f23f4681609ab0ac38294, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerId: 1
-  facingRight: 1
-  force: 500
-  jumpForce: 500
-  jumpHeight: 10
-  isInAir: 0
-  animator: {fileID: 8545145771917605715}
-  isInDefenseMode: 0
-  rb: {fileID: 8545145771917605719}
-  par: {fileID: 0}
---- !u!114 &8545145771917605718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8545145771917605712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4cf6cf890e7cc4fad64fd7aabc5de5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAttackPower: 2
-  basicAttackRangeX: 1
-  longAttackRangeX: 3
-  attackRadius: 1.5
-  attackRangeY: 1
-  attackPos: {fileID: 8545145772041568299}
-  longAttackPos: {fileID: 8545145772312513979}
-  allSideAttackPos: {fileID: 8545145771232686170}
-  enemyInRange: 0
-  defenseMode: 0
-  inAir: 0
-  animator: {fileID: 8545145771917605715}
-  whatIsEnemies:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!50 &8545145771917605719
 Rigidbody2D:
   serializedVersion: 4
@@ -259,6 +210,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 3.29}
   m_EdgeRadius: 0
+--- !u!114 &8545145771917605716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8545145771917605712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581dfedefc1f23f4681609ab0ac38294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 1
+  facingRight: 1
+  force: 500
+  jumpForce: 500
+  jumpHeight: 10
+  isInAir: 0
+  isInDefenseMode: 0
+  animator: {fileID: 8545145771917605715}
+  rb: {fileID: 8545145771917605719}
+  par: {fileID: 8545145771917605718}
+  boxCollider: {fileID: 8545145771917605713}
+--- !u!114 &8545145771917605718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8545145771917605712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4cf6cf890e7cc4fad64fd7aabc5de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAttackPower: 2
+  basicAttackRangeX: 1
+  longAttackRangeX: 3
+  attackRadius: 1.5
+  attackRangeY: 1
+  attackPos: {fileID: 8545145772041568299}
+  longAttackPos: {fileID: 8545145772312513979}
+  allSideAttackPos: {fileID: 8545145771232686170}
+  enemyInRange: 0
+  defenseMode: 0
+  inAir: 0
+  animator: {fileID: 8545145771917605715}
+  whatIsEnemies:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &8545145772041568296
 GameObject:
   m_ObjectHideFlags: 0

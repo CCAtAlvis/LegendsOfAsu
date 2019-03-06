@@ -82,7 +82,7 @@ public class EnemyAI : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Collider2D col = collision.collider;
-        if (col.gameObject.tag.Equals("Player"))
+        if (col.tag.Equals("Player"))
         {
             //Debug.Log("triggerhit");
             enemyInRange = true;

@@ -2,7 +2,6 @@
 
 public class PlayerAttackRange : MonoBehaviour
 {
-    //public float startTimeBtwAttack;
     public int playerAttackPower = 1;
 
     public float basicAttackRangeX = 1;
@@ -23,14 +22,13 @@ public class PlayerAttackRange : MonoBehaviour
 
     private EnemyScript enemyScript;
     private PlayerController pc;
-    //public PlayerController playerController;
     private bool playerFacingRight;
-    //private float timeBtwAttack;
 
     private string basicAttackKey;
     private string longAttackKey;
     private string allSideAttackKey;
     private string powerAttackKey;
+    private string defenceKey;
 
     void Start()
     {
@@ -40,17 +38,19 @@ public class PlayerAttackRange : MonoBehaviour
 
         if (pc.playerId == 1)
         {
-            basicAttackKey = "BasicAttackPlayer1";
-            longAttackKey = "LongAttackPlayer1";
-            allSideAttackKey = "AllSideAttackPlayer1";
-            powerAttackKey = "PowerAttackPlayer1";
+            basicAttackKey = "Fire1Player1";
+            longAttackKey = "Fire2Player1";
+            allSideAttackKey = "Fire3Player1";
+            powerAttackKey = "Fire3Player1";
+            defenceKey = "DefencePlayer1";
         }
         else
         {
-            basicAttackKey = "BasicAttackPlayer2";
-            longAttackKey = "LongAttackPlayer2";
-            allSideAttackKey = "AllSideAttackPlayer2";
-            powerAttackKey = "PowerAttackPlayer2";
+            basicAttackKey = "Fire1Player2";
+            longAttackKey = "Fire2Player2";
+            allSideAttackKey = "Fire3Player2";
+            powerAttackKey = "Fire3Player2";
+            defenceKey = "DefencePlayer2";
         }
     }
 
@@ -116,6 +116,5 @@ public class PlayerAttackRange : MonoBehaviour
         Gizmos.DrawWireCube(longAttackPos.position, new Vector3(longAttackRangeX, attackRangeY, 0));
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(allSideAttackPos.position, attackRadius);
-        //Gizmos.DrawWireSphere();
     }
 }

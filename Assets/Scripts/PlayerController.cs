@@ -4,13 +4,18 @@ public class PlayerController : MonoBehaviour
 {
     //public Vector2 xVelocity;
     public int playerId = 1;
-    public bool facingRight = true;
+    public int playerHealth = 10;
+    private int playerHealthMax;
+
     public float force = 10f;
     public float jumpForce = 400f;
     public float jumpHeight = 10f;
+
+    public bool isFacingRight = true;
     public bool isInAir = false;
-    public Animator animator;
     public bool isInDefenseMode;
+
+    public Animator animator;
 
     [SerializeField]
     public Rigidbody2D rb;
@@ -24,34 +29,37 @@ public class PlayerController : MonoBehaviour
     private string horizontal;
     private string vertical;
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    private bool canMove = true;
 
     // Use this for initialization
     void Start()
     {
-        par = GetComponent<PlayerAttackRange>();
         //Debug.Log(isInDefenseMode);
         //Debug.Log("Script started");
+        rb = GetComponent<Rigidbody2D>();
+        par = GetComponent<PlayerAttackRange>();
         boxCollider = GetComponent<BoxCollider2D>();
 
         if (playerId == 1)
         {
-            horizontal = "Horizontal";
-            vertical = "Vertical";
+            horizontal = "HorizontalPlayer1";
+            vertical = "VerticalPlayer1";
         }
         else
         {
             horizontal = "HorizontalPlayer2";
             vertical = "VerticalPlayer2";
         }
+
+        playerHealthMax = playerHealth;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!canMove)
+            return;
+
         isInDefenseMode = par.defenseMode;
 
         if (isInAir && transform.position.y <= initialPosition.y)
@@ -77,7 +85,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(h + v);
             animator.SetFloat("Speed", Mathf.Abs(h + v));
 
-            if ((h > 0 && !facingRight) || (h < 0 && facingRight))
+            if ((h > 0 && !isFacingRight) || (h < 0 && isFacingRight))
             {
                 Flip();
             }
@@ -103,7 +111,33 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
-        facingRight = !facingRight;
+        isFacingRight = !isFacingRight;
         transform.localScale *= new Vector2(-1, 1);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Collider2D col = collision.collider;
+        if (col.tag.Equals("Player"))
+        {
+            Debug.Log("collision with other player");
+            canMove = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        canMove = true;
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        playerHealth -= damageAmount;
+
+        if (playerHealth <= 0)
+        {
+            // player die anim here
+            // respawn player with playerHealth = playerHealthMax
+        }
     }
 }
