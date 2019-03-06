@@ -20,7 +20,7 @@ public class PlayerAttackRange : MonoBehaviour
     public Animator animator;
     public LayerMask whatIsEnemies;
 
-    private EnemyScript enemyScript;
+    //private EnemyScript enemyScript;
     private PlayerController pc;
     private bool playerFacingRight;
 
@@ -68,7 +68,7 @@ public class PlayerAttackRange : MonoBehaviour
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                enemiesToHit[i].gameObject.GetComponent<EnemyScript>().TakeDamage(playerAttackPower);
+                enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
             }
         }
 
@@ -80,7 +80,7 @@ public class PlayerAttackRange : MonoBehaviour
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                enemiesToHit[i].gameObject.GetComponent<EnemyScript>().TakeDamage(playerAttackPower * 2);
+                enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower * 2);
             }
         }
 
@@ -90,7 +90,7 @@ public class PlayerAttackRange : MonoBehaviour
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                enemiesToHit[i].gameObject.GetComponent<EnemyScript>().TakeDamage(playerAttackPower);
+                enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
             }
         }
 

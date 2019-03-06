@@ -3,8 +3,10 @@
 public class EnemyAI : MonoBehaviour
 {
     public int followPlayer;
+    public int hitDamage = 1;
+    public int enemyHealth = 10;
     public float offsetValue = 1.5f;
-    public float speed;
+    public float speed = 1.4f;
 
     private bool enemyInRange;
     private bool facingRight = true;
@@ -86,8 +88,25 @@ public class EnemyAI : MonoBehaviour
         {
             //Debug.Log("triggerhit");
             enemyInRange = true;
-            followPlayer = col.gameObject.GetComponent<PlayerController>().playerId;
+            PlayerController pc = col.gameObject.GetComponent<PlayerController>();
+            followPlayer = pc.playerId;
             target = col.gameObject.transform;
+
+            //make this into invoke repeating till the player is in range
+            pc.TakeDamage(hitDamage);
+        }
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        enemyHealth -= damageAmount;
+
+        //Debug.Log("enemy hit" + enemyHealth);
+        if (enemyHealth <= 0)
+        {
+            //play enemy die animation here
+            //then destroy the game object
+            Destroy(gameObject);
         }
     }
 }
