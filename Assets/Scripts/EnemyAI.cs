@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour
 
     private Rigidbody2D rb;
 
-   // Use this for initialization
+    // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -93,7 +93,7 @@ public class EnemyAI : MonoBehaviour
             target = col.gameObject.transform;
 
             //make this into invoke repeating till the player is in range
-            pc.TakeDamage(hitDamage);
+            //pc.TakeDamage(hitDamage);
         }
     }
 

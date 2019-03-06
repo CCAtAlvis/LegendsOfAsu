@@ -123,6 +123,9 @@ public class PlayerController : MonoBehaviour
             Debug.Log("collision with other player");
             canMove = false;
         }
+        else if (col.tag.Equals("Enemy"))
+        {
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -133,6 +136,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         playerHealth -= damageAmount;
+        par.ResetScoreMultipler();
 
         if (playerHealth <= 0)
         {

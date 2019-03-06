@@ -3,11 +3,20 @@
 public class PlayerAttackRange : MonoBehaviour
 {
     public int playerAttackPower = 1;
-
+    
     public float basicAttackRangeX = 1;
     public float longAttackRangeX = 3;
     public float attackRadius = 1;
     public float attackRangeY = 1;
+
+    public int baseScore = 100;
+    public int baseScoreMultiplerHits = 10;
+    public float maxTimeWithoutHit = 50f;
+    private int hitCount = 0;
+    //private int ScoreMultiplerHits = 10;
+    private int scoreMultipler = 1;
+    private float hitTimer = 0f;
+    private bool didPlayerHit = false;
 
     public Transform attackPos;
     public Transform longAttackPos;
@@ -19,6 +28,7 @@ public class PlayerAttackRange : MonoBehaviour
 
     public Animator animator;
     public LayerMask whatIsEnemies;
+    public GameManager gameManager;
 
     //private EnemyScript enemyScript;
     private PlayerController pc;
@@ -34,6 +44,7 @@ public class PlayerAttackRange : MonoBehaviour
     {
         //playerFacingRight = gameObject.GetComponent<PlayerController>().facingRight;
         pc = GetComponent<PlayerController>();
+
         defenseMode = false;
 
         if (pc.playerId == 1)
@@ -60,6 +71,29 @@ public class PlayerAttackRange : MonoBehaviour
         animator.SetBool("slashAttack", false);
         animator.SetBool("defense", false);
 
+        if (hitTimer >= maxTimeWithoutHit)
+        {
+            ResetScoreMultipler();
+            hitTimer = 0f;
+            hitCount = 0;
+        }
+
+        if (didPlayerHit)
+        {
+            hitTimer = 0f;
+            didPlayerHit = false;
+        }
+
+        if (hitCount > baseScoreMultiplerHits*scoreMultipler)
+        {
+            hitCount = 0;
+            hitTimer = 0;
+            scoreMultipler++;
+            Debug.Log(scoreMultipler);
+        }
+
+        hitTimer += Time.deltaTime;
+
         //simple attack
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown(basicAttackKey))
         {
@@ -69,6 +103,10 @@ public class PlayerAttackRange : MonoBehaviour
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
                 enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
+
+                gameManager.AddScore(baseScore*scoreMultipler);
+                hitCount++;
+                didPlayerHit = true;
             }
         }
 
@@ -81,6 +119,10 @@ public class PlayerAttackRange : MonoBehaviour
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
                 enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower * 2);
+
+                gameManager.AddScore(baseScore * scoreMultipler);
+                hitCount++;
+                didPlayerHit = true;
             }
         }
 
@@ -91,6 +133,10 @@ public class PlayerAttackRange : MonoBehaviour
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
                 enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
+
+                gameManager.AddScore(baseScore * scoreMultipler);
+                hitCount++;
+                didPlayerHit = true;
             }
         }
 
@@ -116,5 +162,11 @@ public class PlayerAttackRange : MonoBehaviour
         Gizmos.DrawWireCube(longAttackPos.position, new Vector3(longAttackRangeX, attackRangeY, 0));
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(allSideAttackPos.position, attackRadius);
+    }
+
+    public void ResetScoreMultipler()
+    {
+        Debug.Log("reset multupler");
+        scoreMultipler = 1;
     }
 }
