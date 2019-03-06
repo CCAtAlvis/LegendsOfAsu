@@ -2,16 +2,18 @@
 
 public class EnemyScript : MonoBehaviour
 {
-    public int enemyHealth = 10;
+    public int enemyHealth;
 
-    public void takeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount)
     {
-        Debug.Log("enemy hit" + enemyHealth);
-        enemyHealth -= damageAmount;
-
+        //Debug.Log("enemy hit" + enemyHealth);
         if (enemyHealth <= 0)
         {
+            //play enemy die animation here
+            //then destroy the game object
             Destroy(gameObject);
         }
+
+        enemyHealth -= damageAmount;
     }
 }

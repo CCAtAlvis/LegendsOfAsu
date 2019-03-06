@@ -1,34 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAttackRange : MonoBehaviour
 {
-
-    private bool playerFacingRight;
-    private float timeBtwAttack;
-    public float startTimeBtwAttack;
+    //public float startTimeBtwAttack;
     public int playerAttackPower = 1;
+
+    public float basicAttackRangeX = 1;
+    public float longAttackRangeX = 3;
+    public float attackRadius = 1;
+    public float attackRangeY = 1;
+
     public Transform attackPos;
     public Transform longAttackPos;
     public Transform allSideAttackPos;
-    public LayerMask whatIsEnemies;
-    public float basicAttackRangeX = 1;
-    public float attackRangeY = 1;
-    public float longAttackRangeX = 3;
-    public float attackRadius = 1;
-    EnemyScript enemyScript;
+
     public bool enemyInRange = false;
     public bool defenseMode;
     public bool inAir;
-    public Animator animator;
-    private PlayerController pc;
 
-    void Start ()
+    public Animator animator;
+    public LayerMask whatIsEnemies;
+
+    private EnemyScript enemyScript;
+    private PlayerController pc;
+    //public PlayerController playerController;
+    private bool playerFacingRight;
+    //private float timeBtwAttack;
+
+    private string basicAttackKey;
+    private string longAttackKey;
+    private string allSideAttackKey;
+    private string powerAttackKey;
+
+    void Start()
     {
         //playerFacingRight = gameObject.GetComponent<PlayerController>().facingRight;
         pc = GetComponent<PlayerController>();
         defenseMode = false;
+
+        if (pc.playerId == 1)
+        {
+            basicAttackKey = "BasicAttackPlayer1";
+            longAttackKey = "LongAttackPlayer1";
+            allSideAttackKey = "AllSideAttackPlayer1";
+            powerAttackKey = "PowerAttackPlayer1";
+        }
+        else
+        {
+            basicAttackKey = "BasicAttackPlayer2";
+            longAttackKey = "LongAttackPlayer2";
+            allSideAttackKey = "AllSideAttackPlayer2";
+            powerAttackKey = "PowerAttackPlayer2";
+        }
     }
 
     void Update()
@@ -36,76 +59,55 @@ public class PlayerAttackRange : MonoBehaviour
         inAir = pc.isInAir;
         animator.SetBool("slashAttack", false);
         animator.SetBool("defense", false);
-        if (timeBtwAttack <= 0)
+
+        //simple attack
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown(basicAttackKey))
         {
-            timeBtwAttack = startTimeBtwAttack;
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                animator.SetBool("slashAttack", true);
-                //attackRangeX = 1;
-                Debug.Log("Q pressed");
-                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
-                for (int i = 0; i < enemiesToHit.Length; i++)
-                {
-                    enemiesToHit[i].gameObject.GetComponent<EnemyScript>().takeDamage(playerAttackPower);
+            animator.SetBool("slashAttack", true);
+            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
 
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.R))
+            for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                Debug.Log("R pressed");
-                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
-                for (int i = 0; i < enemiesToHit.Length; i++)
-                {
-                    enemiesToHit[i].gameObject.GetComponent<EnemyScript>().takeDamage(playerAttackPower * 2);
-
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                /*
-                if(playerFacingRight)
-                    attackPos.position += Vector3.right*0.5f;
-                if(!playerFacingRight)
-                    attackPos.position += Vector3.right * 0.5f;
-                */
-                //attackRangeX = 3;
-                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(longAttackPos.position, new Vector2(longAttackRangeX, attackRangeY), 0, whatIsEnemies);
-                for (int i = 0; i < enemiesToHit.Length; i++)
-                {
-                    enemiesToHit[i].gameObject.GetComponent<EnemyScript>().takeDamage(playerAttackPower);
-
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                //attackRangeX = 2;
-                Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, attackRadius, whatIsEnemies);
-                for (int i = 0; i < enemiesToHit.Length; i++)
-                {
-                    enemiesToHit[i].gameObject.GetComponent<EnemyScript>().takeDamage(playerAttackPower);
-
-                }
-            }
-            if (Input.GetKey(KeyCode.T))
-            {
-                defenseMode = true;
-                animator.SetBool("defense", true);
-                Debug.Log("defenseMode ON");
-            }
-            if (Input.GetKeyUp(KeyCode.T))
-            {
-                Debug.Log("defenseMode OFF");
-                defenseMode = false;
+                enemiesToHit[i].gameObject.GetComponent<EnemyScript>().TakeDamage(playerAttackPower);
             }
         }
-        else
+
+        //
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            timeBtwAttack -= Time.deltaTime;
+            //Debug.Log("R pressed");
+            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+
+            for (int i = 0; i < enemiesToHit.Length; i++)
+            {
+                enemiesToHit[i].gameObject.GetComponent<EnemyScript>().TakeDamage(playerAttackPower * 2);
+            }
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, attackRadius, whatIsEnemies);
+
+            for (int i = 0; i < enemiesToHit.Length; i++)
+            {
+                enemiesToHit[i].gameObject.GetComponent<EnemyScript>().TakeDamage(playerAttackPower);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.T))
+        {
+            defenseMode = true;
+            animator.SetBool("defense", true);
+            //Debug.Log("defenseMode ON");
+        }
+
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+            //Debug.Log("defenseMode OFF");
+            defenseMode = false;
+        }
     }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

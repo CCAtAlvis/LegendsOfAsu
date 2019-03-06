@@ -182,8 +182,9 @@ MonoBehaviour:
   jumpHeight: 10
   isInAir: 0
   animator: {fileID: 1050493897}
-  defenseMode: 0
+  isInDefenseMode: 0
   rb: {fileID: 1050493894}
+  par: {fileID: 0}
 --- !u!114 &1050493895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,22 +197,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4cf6cf890e7cc4fad64fd7aabc5de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeBtwAttack: 0
-  playerAttackPower: 1
+  playerAttackPower: 2
+  basicAttackRangeX: 1
+  longAttackRangeX: 3
+  attackRadius: 1.5
+  attackRangeY: 1
   attackPos: {fileID: 1757611239}
   longAttackPos: {fileID: 1936579192}
   allSideAttackPos: {fileID: 1030234030}
-  whatIsEnemies:
-    serializedVersion: 2
-    m_Bits: 512
-  basicAttackRangeX: 1
-  attackRangeY: 1
-  longAttackRangeX: 3
-  attackRadius: 1.5
   enemyInRange: 0
   defenseMode: 0
   inAir: 0
   animator: {fileID: 1050493897}
+  whatIsEnemies:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!50 &1050493894
 Rigidbody2D:
   serializedVersion: 4
