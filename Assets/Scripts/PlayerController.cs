@@ -57,8 +57,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!canMove)
-            return;
+        //if (!canMove)
+        //    return;
 
         isInDefenseMode = par.defenseMode;
 
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         Collider2D col = collision.collider;
         if (col.tag.Equals("Player"))
         {
-            Debug.Log("collision with other player");
+            //Debug.Log("collision with other player");
             canMove = false;
         }
         else if (col.tag.Equals("Enemy"))
@@ -135,6 +135,10 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        bool isInDefence = par.defenseMode;
+        if (isInDefence)
+            return;
+
         playerHealth -= damageAmount;
         par.ResetScoreMultipler();
 

@@ -3,11 +3,19 @@
 public class PlayerAttackRange : MonoBehaviour
 {
     public int playerAttackPower = 1;
-    
+
+    public int basicAttackPower = 2;
+    public int longAttackPower = 3;
+    public int radiusAttackPower = 1;
+
     public float basicAttackRangeX = 1;
     public float longAttackRangeX = 3;
     public float attackRadius = 1;
+
     public float attackRangeY = 1;
+
+    public float longAttackPressTime = 5f;
+    private float longAttackTimer = 0f;
 
     public int baseScore = 100;
     public int baseScoreMultiplerHits = 10;
@@ -84,12 +92,12 @@ public class PlayerAttackRange : MonoBehaviour
             didPlayerHit = false;
         }
 
-        if (hitCount > baseScoreMultiplerHits*scoreMultipler)
+        if (hitCount > baseScoreMultiplerHits * scoreMultipler)
         {
             hitCount = 0;
             hitTimer = 0;
             scoreMultipler++;
-            Debug.Log(scoreMultipler);
+            //Debug.Log(scoreMultipler);
         }
 
         hitTimer += Time.deltaTime;
@@ -104,7 +112,7 @@ public class PlayerAttackRange : MonoBehaviour
             {
                 enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
 
-                gameManager.AddScore(baseScore*scoreMultipler);
+                gameManager.AddScore(baseScore * scoreMultipler);
                 hitCount++;
                 didPlayerHit = true;
             }
@@ -140,13 +148,28 @@ public class PlayerAttackRange : MonoBehaviour
             }
         }
 
+        if (Input.GetButton(longAttackKey))
+        {
+            longAttackTimer += Time.deltaTime;
+
+            if (longAttackTimer >= longAttackPressTime)
+            {
+                //TODO:
+                //do long attack
+            }
+        }
+        if (Input.GetButtonUp(longAttackKey))
+        {
+            longAttackTimer = 0f;
+        }
+
+
         if (Input.GetKey(KeyCode.T))
         {
             defenseMode = true;
             animator.SetBool("defense", true);
             //Debug.Log("defenseMode ON");
         }
-
         if (Input.GetKeyUp(KeyCode.T))
         {
             //Debug.Log("defenseMode OFF");
@@ -166,7 +189,7 @@ public class PlayerAttackRange : MonoBehaviour
 
     public void ResetScoreMultipler()
     {
-        Debug.Log("reset multupler");
+        //Debug.Log("reset multupler");
         scoreMultipler = 1;
     }
 }

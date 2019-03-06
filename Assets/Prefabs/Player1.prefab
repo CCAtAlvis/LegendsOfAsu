@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4cf6cf890e7cc4fad64fd7aabc5de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttackPower: 2
+  playerAttackPower: 1
   basicAttackRangeX: 1
   longAttackRangeX: 3
   attackRadius: 1.5
