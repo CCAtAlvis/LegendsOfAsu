@@ -56,14 +56,14 @@ public class PlayerController : MonoBehaviour
 
         if (isInAir && transform.position.y <= initialPosition.y)
         {
-            //rb.transform.Translate(transform.position.x, initialPosition.y, 0);
-            Debug.Log("Transform Position :" + transform.position.y);
+            //Debug.Log("Transform Position :" + transform.position.y);
+            Debug.Log(initialPosition.y + " : " + transform.position.y);
             rb.gravityScale = 0;
             //rb.velocity = Vector3.zero;
             isInAir = false;
             animator.SetBool("inAir", false);
-            Debug.Log(initialPosition);
-            transform.position = initialPosition;
+            //Debug.Log(initialPosition);
+            transform.position = new Vector2(transform.position.x, initialPosition.y);
             boxCollider.enabled = true;
         }
         else if (!isInAir)
