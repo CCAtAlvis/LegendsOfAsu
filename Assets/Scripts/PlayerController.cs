@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 //using UnityStandardAssets.CrossPlatformInput;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     //public Vector2 xVelocity;
     public int playerId = 1;
@@ -13,7 +14,8 @@ public class PlayerController : MonoBehaviour {
     private Vector3 initialPosition;
     public Animator animator;
     public bool defenseMode;
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField]
+    private Rigidbody2D rb;
     private float h;
     private float v;
     private PlayerAttackRange par;
@@ -24,11 +26,12 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
     }
 
-	void Start () {
+    void Start()
+    {
         par = GetComponent<PlayerAttackRange>();
         Debug.Log(defenseMode);
         Debug.Log("Script started");
-	}
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -59,17 +62,16 @@ public class PlayerController : MonoBehaviour {
                 h = Input.GetAxis("HorizontalPlayer2");
                 v = Input.GetAxis("VerticalPlayer2");
             }
+
             rb.velocity = new Vector2(h, v) * force * Time.deltaTime;
             Debug.Log(h + v);
             animator.SetFloat("Speed", Mathf.Abs(h + v));
-            if(h>0&&!facingRight)
+
+            if ((h > 0 && !facingRight) || (h < 0 && facingRight))
             {
-                flip();
+                Flip();
             }
-            if(h<0&&facingRight)
-            {
-                flip();
-            }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Vector2 lastVelocity = rb.velocity;
@@ -94,7 +96,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void flip()
+    private void Flip()
     {
         Debug.Log("flipped");
         facingRight = !facingRight;
