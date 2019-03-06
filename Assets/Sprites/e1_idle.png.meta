@@ -15,7 +15,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -88,6 +88,17 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -97,7 +108,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 356.25
+        width: 356
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -117,11 +128,11 @@ TextureImporter:
         serializedVersion: 2
         x: 356
         y: 0
-        width: 356.25
+        width: 350
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -135,10 +146,10 @@ TextureImporter:
       name: e1_idle_2
       rect:
         serializedVersion: 2
-        x: 712
-        y: 0
-        width: 356.25
-        height: 365
+        x: 705
+        y: 2
+        width: 355
+        height: 363
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,9 +166,9 @@ TextureImporter:
       name: e1_idle_3
       rect:
         serializedVersion: 2
-        x: 1068
+        x: 1063
         y: 0
-        width: 356.25
+        width: 352
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -175,9 +186,9 @@ TextureImporter:
       name: e1_idle_4
       rect:
         serializedVersion: 2
-        x: 1424
+        x: 1417
         y: 0
-        width: 356.25
+        width: 353
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -195,9 +206,9 @@ TextureImporter:
       name: e1_idle_5
       rect:
         serializedVersion: 2
-        x: 1780
+        x: 1770
         y: 0
-        width: 356.25
+        width: 354
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -215,9 +226,9 @@ TextureImporter:
       name: e1_idle_6
       rect:
         serializedVersion: 2
-        x: 2136
+        x: 2125
         y: 0
-        width: 356.25
+        width: 352
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -235,9 +246,9 @@ TextureImporter:
       name: e1_idle_7
       rect:
         serializedVersion: 2
-        x: 2492
+        x: 2477
         y: 0
-        width: 356.25
+        width: 355
         height: 365
       alignment: 7
       pivot: {x: 0.5, y: 0}
