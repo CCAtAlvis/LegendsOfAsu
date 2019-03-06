@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemyManager : MonoBehaviour {
-
+public class EnemyManager : MonoBehaviour
+{
     public int numOfEnemies = 5;
     public int startTime = 1;
     public int delayTime = 100;
@@ -11,34 +11,27 @@ public class enemyManager : MonoBehaviour {
     public Transform spawnPoint;
     public GameObject enemy;
     private bool waiting;
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start()
+    {
         waiting = true;
-	}
-	void SpawnEnemy()
+    }
+
+    void SpawnEnemy()
     {
         GameObject newEnemy = Instantiate(enemy, spawnPoint.position, Quaternion.identity);
         newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
         numOfEnemies--;
         playerId *= -1;
     }
-	// Update is called once per frame
-	void Update () {
 
+    // Update is called once per frame
+    void Update()
+    {
         while (numOfEnemies != 0)
         {
-            InvokeRepeating("SpawnEnemy", startTime,delayTime);
-            /*
-            //waiting = false;
-            StartCoroutine(waitTime());
-            if (!waiting)
-            {
-                GameObject newEnemy = Instantiate(enemy, spawnPoint.position, Quaternion.identity);
-                newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
-                numOfEnemies--;
-                playerId *= -1;
-            }
-            */
+            InvokeRepeating("SpawnEnemy", startTime, delayTime);
         }
     }
 

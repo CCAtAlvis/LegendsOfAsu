@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour {
     private Vector2 nearerOffset;
     private Vector2 rightOffset;
     private Vector2 leftOffset;
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Player")
@@ -19,11 +20,13 @@ public class EnemyAI : MonoBehaviour {
             enemyInRange = true;
         }
     }
+
     public float speed;
     private GameObject[] targetPlayers;
     private GameObject targetPlayer;
     private Transform target;
     private bool inAir;
+
 	// Use this for initialization
 	void Start () {
         targetPlayers = GameObject.FindGameObjectsWithTag("Player");
@@ -70,6 +73,7 @@ public class EnemyAI : MonoBehaviour {
     
         }
 	}
+
     void flip()
     {
         Debug.Log("flipped");
