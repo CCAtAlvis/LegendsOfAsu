@@ -17,26 +17,22 @@ public class EnemyAI : MonoBehaviour
     private Vector2 rightOffset;
     private Vector2 leftOffset;
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Player")
-        {
-            Debug.Log("triggerhit");
-            enemyInRange = true;
-        }
-    }
+    private Rigidbody2D rb;
 
-    // Use this for initialization
+   // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+
         targetPlayers = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < targetPlayers.Length; i++)
         {
             if (targetPlayers[i].GetComponent<PlayerController>().playerId == followPlayer)
             {
                 targetPlayer = targetPlayers[i];
-                target = targetPlayer.GetComponent<Transform>();
-                Debug.Log(" a enemy following player " + followPlayer);
+                //target = targetPlayer.GetComponent<Transform>();
+                target = targetPlayer.gameObject.transform;
+                //Debug.Log("a enemy following player " + followPlayer);
                 break;
             }
         }
@@ -76,10 +72,22 @@ public class EnemyAI : MonoBehaviour
 
     void Flip()
     {
-        Debug.Log("flipped");
+        //Debug.Log("flipped");
         facingRight = !facingRight;
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Collider2D col = collision.collider;
+        if (col.gameObject.tag.Equals("Player"))
+        {
+            //Debug.Log("triggerhit");
+            enemyInRange = true;
+            followPlayer = col.gameObject.GetComponent<PlayerController>().playerId;
+            target = col.gameObject.transform;
+        }
     }
 }
