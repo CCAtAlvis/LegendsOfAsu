@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     public float afterAttackPauseTime = 1f;
     public float takeDamagePauseTime = 1.6f;
     public float beforeFlipPauseTime = 1.1f;
+    public float deathAnimTime = 05f;
 
     public int attackAnimTime = 10;
     public int hitAnimTime = 10;
@@ -164,9 +165,9 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             //play enemy die animation here
-            //animator.SetTrigger("dead");
+            animator.SetTrigger("dead");
             //then destroy the game object
-            Destroy(gameObject);
+            StartCoroutine(EnemyDead(deathAnimTime));
         }
 
         //play the animation and while enemy is paused
@@ -207,6 +208,6 @@ public class EnemyAI : MonoBehaviour
     {
         isEnemyPaused = true;
         yield return new WaitForSeconds(pauseDuration+0.1f);
-        Destroy(this.gameObject);
+        //Destroy(gameObject);
     }
 }
