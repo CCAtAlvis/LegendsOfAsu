@@ -82,6 +82,11 @@ public class EnemyAI : MonoBehaviour
                 Flip();
 
             transform.position = Vector2.MoveTowards(transform.position, nearerOffset, speed * Time.deltaTime);
+            animator.SetBool("walk", true);
+        }
+        else
+        {
+            animator.SetBool("walk", false);
         }
     }
 
@@ -92,17 +97,6 @@ public class EnemyAI : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        Collider2D col = collision.collider;
-        if (col.gameObject.tag.Equals("Player"))
-        {
-            Debug.Log("triggerExit");
-            //animator.SetBool("attackPlayer", false);
-            animator.SetBool("walk", true);
-        }
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -120,8 +114,8 @@ public class EnemyAI : MonoBehaviour
             
         }
         else
-            Debug.Log("PlayerInRange");
         {
+            Debug.Log("PlayerInRange");
             if (isEnemyPaused)
                 return;
 
@@ -130,16 +124,15 @@ public class EnemyAI : MonoBehaviour
                 //then get the distance between player and enemy
                 if (Vector3.Distance(transform.position, pc.transform.position) <= offsetValue * 2)
                 {
-                    //play the animation and while enemy is paused
-                    //animator.SetBool("attackPlayer",true);
-                    animator.SetTrigger("attackPlayer");
-                    StartCoroutine(PauseEnemyMovement(attackAnimTime));
-
                     //player takes damage
                     pc.TakeDamage(hitDamage);
 
+                    //play the animation and while enemy is paused
+                    animator.SetTrigger("attackPlayer");
+                    StartCoroutine(PauseEnemyMovement(attackAnimTime));
+
                     //pause the enemy for some more time
-                    float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime + 0.5f);
+                    float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime);
                     StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
                     pc = null;
                 }
@@ -164,6 +157,18 @@ public class EnemyAI : MonoBehaviour
                 float pTime = Random.Range(0.1f, 0.5f);
                 StartCoroutine(PauseEnemyMovement(pTime));
             }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        Collider2D col = collision.collider;
+        if (col.gameObject.tag.Equals("Player"))
+        {
+            Debug.Log("triggerExit");
+            //animator.SetBool("attackPlayer", false);
+            //animator.SetBool("walk", true);
+            animator.SetBool("idle", true);
         }
     }
 
