@@ -8,10 +8,14 @@ public class EnemyAI : MonoBehaviour
     public int enemyHealth = 10;
     public float offsetValue = 0.1f;
     public float speed = 1.4f;
-    public float afterAttackPauseTime = 2f;
-    public float takeDamagePauseTime = 3f;
+
+    public float afterAttackPauseTime = 1f;
+    public float takeDamagePauseTime = 1.6f;
+    public float beforeFlipPauseTime = 1.1f;
+
     public int attackAnimTime = 10;
     public int hitAnimTime = 10;
+
     public Animator animator;
 
     private bool enemyInRange;
@@ -28,7 +32,6 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerController pc;
     private bool isEnemyPaused = false;
-    private bool didEnemyHit = false;
     private bool isPlayingAnimation = false;
 
     // Use this for initialization
@@ -73,20 +76,27 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (Vector2.Distance(nearerOffset, transform.position) > 0)
+        if (Vector2.Distance(nearerOffset, transform.position) > 0.2f)
         {
             //Debug.Log("player on ground");
             if (transform.position.x < target.position.x && !facingRight)
+            {
                 Flip();
+                StartCoroutine(PauseEnemyMovement(beforeFlipPauseTime));
+            }
             else if (transform.position.x > target.position.x && facingRight)
+            {
                 Flip();
+                StartCoroutine(PauseEnemyMovement(beforeFlipPauseTime));
+            }
 
             transform.position = Vector2.MoveTowards(transform.position, nearerOffset, speed * Time.deltaTime);
-            //animator.SetBool("walk", true);
+            animator.SetBool("walk", true);
         }
         else
         {
-            //animator.SetBool("walk", false);
+            animator.SetBool("walk", false);
+            animator.SetBool("idle", true);
         }
     }
 
@@ -101,18 +111,22 @@ public class EnemyAI : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        //Collider2D col = collision.collider;
-        if (col.tag.Equals("Player"))
-        {
-            enemyInRange = true;
+        if (isEnemyPaused)
+            return;
 
+        if (col.tag.Equals("Player") && IsPlayerInRange(col.transform.position))
+        {
             pc = col.gameObject.GetComponent<PlayerController>();
             followPlayer = pc.playerId;
             target = col.gameObject.transform;
 
-            //some shit happening here "works hopefully"
-            //first wait for some random time
-            didEnemyHit = true;
+            //player takes damage
+            pc.TakeDamage(hitDamage);
+
+            //play the animation and while enemy is paused
+            animator.SetBool("idle", false);
+            animator.SetTrigger("attackPlayer");
+            StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
         }
     }
 
@@ -121,66 +135,25 @@ public class EnemyAI : MonoBehaviour
         if (isEnemyPaused)
             return;
 
-        if (didEnemyHit && pc != null)
+        if (col.tag.Equals("Player") && IsPlayerInRange(col.transform.position))
         {
-            //then get the distance between player and enemy
-            if (Vector3.Distance(transform.position, pc.transform.position) <= offsetValue * 2)
-            {
-                //player takes damage
-                pc.TakeDamage(hitDamage);
+            pc = col.gameObject.GetComponent<PlayerController>();
+            followPlayer = pc.playerId;
+            target = col.gameObject.transform;
 
-                //play the animation and while enemy is paused
-                animator.SetTrigger("attackPlayer");
-                StartCoroutine(PauseEnemyMovement(attackAnimTime));
+            //player takes damage
+            pc.TakeDamage(hitDamage);
 
-                //pause the enemy for some more time
-                //float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime);
-                //StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
-                pc = null;
-            }
-
-            didEnemyHit = false;
-            return;
-        }
-
-        if (Vector2.Distance(nearerOffset, transform.position) > 0)
-        {
-            //Debug.Log("IF");
-            
-            if (transform.position.x < target.position.x && !facingRight)
-                Flip();
-            else if (transform.position.x > target.position.x && facingRight)
-                Flip();
-
-            transform.position = Vector2.MoveTowards(transform.position, nearerOffset, speed * Time.deltaTime);
-            
-        }
-        else
-        {
-            //Debug.Log("PlayerInRange");
-
-            //Collider2D col = collision.collider;
-            if (col.tag.Equals("Player"))
-            {
-                enemyInRange = true;
-
-                pc = col.gameObject.GetComponent<PlayerController>();
-                followPlayer = pc.playerId;
-                target = col.gameObject.transform;
-
-                //some shit happening here "works hopefully"
-                //first wait for some random time
-                didEnemyHit = true;
-
-                float pTime = Random.Range(0.1f, 0.5f);
-                StartCoroutine(PauseEnemyMovement(pTime));
-            }
+            //play the animation and while enemy is paused
+            animator.SetBool("idle", false);
+            animator.SetTrigger("attackPlayer");
+            StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
         }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        //animator.SetBool("walk", true);
+        animator.SetBool("walk", true);
     }
 
     public void TakeDamage(int damageAmount)
@@ -198,17 +171,42 @@ public class EnemyAI : MonoBehaviour
 
         //play the animation and while enemy is paused
         //animator.SetBool("hit",true);
-        //animator.SetTrigger("hit");
-        StartCoroutine(PauseEnemyMovement(hitAnimTime));
+        animator.SetTrigger("hit");
 
         StartCoroutine(PauseEnemyMovement(takeDamagePauseTime));
+    }
+
+    private bool IsPlayerInRange(Vector3 pos)
+    {
+        if ((transform.position.y > pos.y - 0.2f) && (transform.position.y < pos.y + 0.2f))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     IEnumerator PauseEnemyMovement(float pauseDuration)
     {
         isEnemyPaused = true;
+
+        animator.SetBool("walk", false);
+        animator.SetBool("idle", true);
+
         yield return new WaitForSeconds(pauseDuration);
+
         isEnemyPaused = false;
-        //animator.SetBool("walk", true);
+        //animator.ResetTrigger("attackPlayer");
+        //animator.ResetTrigger("hit");
+        animator.SetBool("idle", false);
+        animator.SetBool("walk", true);
+    }
+
+
+    IEnumerator EnemyDead(float pauseDuration)
+    {
+        isEnemyPaused = true;
+        yield return new WaitForSeconds(pauseDuration+0.1f);
+        Destroy(this.gameObject);
     }
 }
