@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
     public int followPlayer;
+    public int hitDamage = 1;
+    public int enemyHealth = 10;
     public float offsetValue = 1.5f;
-    public float speed;
+    public float speed = 1.4f;
+    public float afterAttackPauseTime = 2f;
+    public float takeDamagePauseTime = 3f;
 
     private bool enemyInRange;
     private bool facingRight = true;
@@ -19,7 +24,12 @@ public class EnemyAI : MonoBehaviour
 
     private Rigidbody2D rb;
 
-   // Use this for initialization
+    private PlayerController pc;
+    private bool isEnemyPaused = false;
+    private bool didEnemyHit = false;
+    private bool isPlayingAnimation = false;
+
+    // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +51,9 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEnemyPaused)
+            return;
+
         inAir = targetPlayer.GetComponent<PlayerController>().isInAir;
 
         if (!inAir)
@@ -79,15 +92,72 @@ public class EnemyAI : MonoBehaviour
         transform.localScale = scale;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
-        Collider2D col = collision.collider;
-        if (col.gameObject.tag.Equals("Player"))
+        if (isEnemyPaused)
+            return;
+
+        if (didEnemyHit && pc != null)
         {
-            //Debug.Log("triggerhit");
-            enemyInRange = true;
-            followPlayer = col.gameObject.GetComponent<PlayerController>().playerId;
-            target = col.gameObject.transform;
+            //then get the distance between player and enemy
+            if (Vector3.Distance(transform.position, pc.transform.position) <= offsetValue * 2)
+            {
+                //play the animation and while enemy is paused
+                //StartCoroutine(PauseEnemyMovement(attackAnimTime));
+
+                //player takes damage
+                //pc.TakeDamage(hitDamage);
+
+                //pause the enemy for some more time
+                float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime + 0.5f);
+                StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
+                pc = null;
+            }
+
+            didEnemyHit = false;
+            return;
         }
+
+        Collider2D col = collision.collider;
+        if (col.tag.Equals("Player"))
+        {
+            enemyInRange = true;
+
+            pc = col.gameObject.GetComponent<PlayerController>();
+            followPlayer = pc.playerId;
+            target = col.gameObject.transform;
+
+            //some shit happening here "works hopefully"
+            //first wait for some random time
+            didEnemyHit = true;
+
+            float pTime = Random.Range(0.2f, 1.3f);
+            StartCoroutine(PauseEnemyMovement(pTime));
+        }
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        enemyHealth -= damageAmount;
+
+        //Debug.Log("enemy hit" + enemyHealth);
+        if (enemyHealth <= 0)
+        {
+            //play enemy die animation here
+            //then destroy the game object
+            Destroy(gameObject);
+        }
+
+        //play the animation and while enemy is paused
+        //StartCoroutine(PauseEnemyMovement(hitAnimTime));
+
+        StartCoroutine(PauseEnemyMovement(takeDamagePauseTime));
+    }
+
+    IEnumerator PauseEnemyMovement(float pauseDuration)
+    {
+        isEnemyPaused = true;
+        yield return new WaitForSeconds(pauseDuration);
+        isEnemyPaused = false;
     }
 }
