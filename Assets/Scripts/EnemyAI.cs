@@ -104,6 +104,7 @@ public class EnemyAI : MonoBehaviour
             animator.SetBool("walk", true);
         }
     }
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (Vector2.Distance(nearerOffset, transform.position) > 0)
