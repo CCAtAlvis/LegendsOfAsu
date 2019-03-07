@@ -156,6 +156,17 @@ public class PlayerAttackRange : MonoBehaviour
             {
                 //TODO:
                 //do long attack
+                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+
+                for (int i = 0; i < enemiesToHit.Length; i++)
+                {
+                    enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower * 2);
+
+                    gameManager.AddScore(baseScore * scoreMultipler);
+                    hitCount++;
+                    didPlayerHit = true;
+                }
+
             }
         }
         if (Input.GetButtonUp(longAttackKey))
