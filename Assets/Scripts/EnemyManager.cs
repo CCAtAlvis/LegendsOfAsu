@@ -51,7 +51,7 @@ public class EnemyManager : MonoBehaviour
                     enemyRange++;
             }
             phase++;
-            Debug.Log("starting phase : " + phase);
+            //Debug.Log("starting phase : " + phase);
             phaseTimer = 0f;
         }
     }
