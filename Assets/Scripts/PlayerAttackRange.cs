@@ -38,7 +38,7 @@ public class PlayerAttackRange : MonoBehaviour
     public LayerMask whatIsEnemies;
     public GameManager gameManager;
 
-    //private EnemyScript enemyScript;
+    private EnemyAI enemy;
     private PlayerController pc;
     private bool playerFacingRight;
 
@@ -110,7 +110,8 @@ public class PlayerAttackRange : MonoBehaviour
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
+                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+                enemy.TakeDamage(playerAttackPower);
 
                 gameManager.AddScore(baseScore * scoreMultipler);
                 hitCount++;
@@ -126,7 +127,8 @@ public class PlayerAttackRange : MonoBehaviour
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower * 2);
+                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+                enemy.TakeDamage(playerAttackPower);
 
                 gameManager.AddScore(baseScore * scoreMultipler);
                 hitCount++;
@@ -140,7 +142,8 @@ public class PlayerAttackRange : MonoBehaviour
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
-                enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower);
+                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+                enemy.TakeDamage(playerAttackPower);
 
                 gameManager.AddScore(baseScore * scoreMultipler);
                 hitCount++;
@@ -160,7 +163,8 @@ public class PlayerAttackRange : MonoBehaviour
 
                 for (int i = 0; i < enemiesToHit.Length; i++)
                 {
-                    enemiesToHit[i].gameObject.GetComponent<EnemyAI>().TakeDamage(playerAttackPower * 2);
+                    enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+                    enemy.TakeDamage(playerAttackPower);
 
                     gameManager.AddScore(baseScore * scoreMultipler);
                     hitCount++;
