@@ -38,12 +38,13 @@ public class EnemyManager : MonoBehaviour
         p += (matchTimer / matchTime);
         int prob = (int)Mathf.Round(p);
 
-        if (p < 1)
-            p--;
+        if (prob > 1)
+            prob--;
 
         //Debug.Log("spwaning enemy at position: " + i);
 
-        GameObject newEnemy = Instantiate(enemyPrefabs[1], spawnPoints[i].position, Quaternion.identity);
+        Debug.Log(prob);
+        GameObject newEnemy = Instantiate(enemyPrefabs[prob], spawnPoints[i].position, Quaternion.identity);
         newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
         playerId *= -1;
 

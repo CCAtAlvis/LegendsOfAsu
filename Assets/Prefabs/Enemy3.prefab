@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3638881644642780301}
   - component: {fileID: 7994636670225836462}
   - component: {fileID: 8687799789859953490}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2996132361550046447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07112682, y: 1.6393661}
+  m_Offset: {x: -0.056569755, y: 1.7945604}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -106,7 +106,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6848843, y: 2.9468079}
+  m_Size: {x: 1.8013405, y: 3.0731297}
   m_EdgeRadius: 0
 --- !u!95 &7994636670225836462
 Animator:
@@ -142,7 +142,7 @@ MonoBehaviour:
   followPlayer: 0
   hitDamage: 1
   enemyHealth: 10
-  offsetValue: 0.1
+  offsetValue: 1.1
   speed: 1.4
   afterAttackPauseTime: 2
   takeDamagePauseTime: 3

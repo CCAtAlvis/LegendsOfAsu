@@ -161,7 +161,7 @@ public class EnemyAI : MonoBehaviour
                 //first wait for some random time
                 didEnemyHit = true;
 
-                float pTime = Random.Range(0.2f, 1.3f);
+                float pTime = Random.Range(0.1f, 0.5f);
                 StartCoroutine(PauseEnemyMovement(pTime));
             }
         }
