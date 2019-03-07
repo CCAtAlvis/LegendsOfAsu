@@ -62,7 +62,7 @@ public class EnemyAI : MonoBehaviour
         {
             rightOffset = target.position + new Vector3(1, 0, 0) * offsetValue;
             leftOffset = target.position + new Vector3(-1, 0, 0) * offsetValue;
-
+             
             if (Vector2.Distance(rightOffset, transform.position) > Vector2.Distance(leftOffset, transform.position))
             {
                 nearerOffset = leftOffset;
