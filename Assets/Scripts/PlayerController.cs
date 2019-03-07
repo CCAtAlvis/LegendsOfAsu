@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviour
         {
             // player die anim here
             // respawn player with playerHealth = playerHealthMax
+            Time.timeScale = 0;
         }
     }
 }
