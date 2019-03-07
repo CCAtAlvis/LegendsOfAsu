@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class EnemyAI : MonoBehaviour
     public int enemyHealth = 10;
     public float offsetValue = 1.5f;
     public float speed = 1.4f;
+    public float afterAttackPauseTime = 2f;
+    public float takeDamagePauseTime = 3f;
+    private bool pauseEnemy = false;
 
     private bool enemyInRange;
     private bool facingRight = true;
@@ -43,6 +47,9 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pauseEnemy)
+            return;
+
         inAir = targetPlayer.GetComponent<PlayerController>().isInAir;
 
         if (!inAir)
@@ -83,6 +90,9 @@ public class EnemyAI : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (pauseEnemy)
+            return;
+
         Collider2D col = collision.collider;
         if (col.tag.Equals("Player"))
         {
@@ -91,6 +101,7 @@ public class EnemyAI : MonoBehaviour
             PlayerController pc = col.gameObject.GetComponent<PlayerController>();
             followPlayer = pc.playerId;
             target = col.gameObject.transform;
+            StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
 
             //make this into invoke repeating till the player is in range
             //pc.TakeDamage(hitDamage);
@@ -100,6 +111,7 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         enemyHealth -= damageAmount;
+        StartCoroutine(PauseEnemyMovement(takeDamagePauseTime));
 
         //Debug.Log("enemy hit" + enemyHealth);
         if (enemyHealth <= 0)
@@ -108,5 +120,12 @@ public class EnemyAI : MonoBehaviour
             //then destroy the game object
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator PauseEnemyMovement(float pauseDuration)
+    {
+        pauseEnemy = true;
+        yield return new WaitForSeconds(pauseDuration);
+        pauseEnemy = false;
     }
 }
