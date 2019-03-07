@@ -99,9 +99,9 @@ public class EnemyAI : MonoBehaviour
         transform.localScale = scale;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        Collider2D col = collision.collider;
+        //Collider2D col = collision.collider;
         if (col.tag.Equals("Player"))
         {
             enemyInRange = true;
@@ -116,7 +116,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnTriggerStay2D(Collider2D col)
     {
         if (isEnemyPaused)
             return;
@@ -159,7 +159,7 @@ public class EnemyAI : MonoBehaviour
         {
             //Debug.Log("PlayerInRange");
 
-            Collider2D col = collision.collider;
+            //Collider2D col = collision.collider;
             if (col.tag.Equals("Player"))
             {
                 enemyInRange = true;
@@ -178,7 +178,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D col)
     {
         //animator.SetBool("walk", true);
     }
