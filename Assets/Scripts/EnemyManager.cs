@@ -8,18 +8,18 @@ public class EnemyManager : MonoBehaviour
     //public int numOfEnemies = 0;
     public int startTime = 1;
     public int delayTime = 3;
-    public int matchTime = 8;
-
-    private int playerId = 1;
-
+    public GameManager gameManager;
     public Transform[] spawnPoint;
     public GameObject enemyPrefab;
+
+    private int playerId = 1;
+    private int matchTime = 8;
     private bool waiting;
 
     // Use this for initialization
     void Start()
     {
-        matchTime *= 60;
+        matchTime = gameManager.matchTime;
         InvokeRepeating("SpawnEnemy", startTime, delayTime);
     }
 

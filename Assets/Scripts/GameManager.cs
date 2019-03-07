@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int matchTime = 8;
+    public int matchTime = 300;
     public Text scoreText;
     public GameObject endScreen;
     public Text finalScoreText;
@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         endScreen.SetActive(false);
-        matchTime *= 60;
     }
 
     // Update is called once per frame
@@ -30,6 +29,7 @@ public class GameManager : MonoBehaviour
 
         if (timer >= matchTime)
         {
+            scoreText.enabled = false;
             endScreen.SetActive(true);
             finalScoreText.text = "Score: " + score;
             matchEnd = true;
