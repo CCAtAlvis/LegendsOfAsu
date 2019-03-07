@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
         bool isInDefence = par.defenseMode;
         if (isInDefence)
             return;
-
+        animator.SetTrigger("hit");
         playerHealth -= damageAmount;
         par.ResetScoreMultipler();
 

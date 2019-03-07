@@ -10,6 +10,9 @@ public class EnemyAI : MonoBehaviour
     public float speed = 1.4f;
     public float afterAttackPauseTime = 2f;
     public float takeDamagePauseTime = 3f;
+    public int attackAnimTime = 5;
+    public int hitAnimTime = 5;
+    public Animator animator;
 
     private bool enemyInRange;
     private bool facingRight = true;
@@ -23,7 +26,6 @@ public class EnemyAI : MonoBehaviour
     private Vector2 leftOffset;
 
     private Rigidbody2D rb;
-
     private PlayerController pc;
     private bool isEnemyPaused = false;
     private bool didEnemyHit = false;
@@ -58,8 +60,8 @@ public class EnemyAI : MonoBehaviour
 
         if (!inAir)
         {
-            rightOffset = target.position + new Vector3(1, 0, 0) * offsetValue;
-            leftOffset = target.position + new Vector3(-1, 0, 0) * offsetValue;
+            rightOffset = target.position + 0*new Vector3(1, 0, 0) * offsetValue;
+            leftOffset = target.position + 0*new Vector3(-1, 0, 0) * offsetValue;
 
             if (Vector2.Distance(rightOffset, transform.position) > Vector2.Distance(leftOffset, transform.position))
             {
@@ -103,10 +105,11 @@ public class EnemyAI : MonoBehaviour
             if (Vector3.Distance(transform.position, pc.transform.position) <= offsetValue * 2)
             {
                 //play the animation and while enemy is paused
-                //StartCoroutine(PauseEnemyMovement(attackAnimTime));
+                animator.SetBool("attackPlayer",true);
+                StartCoroutine(PauseEnemyMovement(attackAnimTime));
 
                 //player takes damage
-                //pc.TakeDamage(hitDamage);
+                pc.TakeDamage(hitDamage);
 
                 //pause the enemy for some more time
                 float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime + 0.5f);
@@ -144,12 +147,14 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             //play enemy die animation here
+            animator.SetTrigger("dead");
             //then destroy the game object
             Destroy(gameObject);
         }
 
         //play the animation and while enemy is paused
-        //StartCoroutine(PauseEnemyMovement(hitAnimTime));
+        animator.SetTrigger("hit");
+        StartCoroutine(PauseEnemyMovement(hitAnimTime));
 
         StartCoroutine(PauseEnemyMovement(takeDamagePauseTime));
     }

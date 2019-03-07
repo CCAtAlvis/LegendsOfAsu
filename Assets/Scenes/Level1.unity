@@ -919,6 +919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2051972191}
   - component: {fileID: 2051972192}
+  - component: {fileID: 2051972193}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -962,6 +963,22 @@ MonoBehaviour:
   - {fileID: 625284744}
   enemyPrefab: {fileID: 5903371315524489651, guid: 31537cfda8c2b414195c33edd68f4bb3,
     type: 3}
+--- !u!114 &2051972193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051972190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37599c3e472230c429cf3131972290d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matchTime: 8
+  scoreText: {fileID: 1741455125}
+  endScreen: {fileID: 0}
+  finalScoreText: {fileID: 0}
 --- !u!1 &2059812212
 GameObject:
   m_ObjectHideFlags: 0
