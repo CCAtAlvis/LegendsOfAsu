@@ -15,13 +15,23 @@ public class EnemyManager : MonoBehaviour
 
     private int playerId = 1;
     private int matchTime;
+    private int phaseTime;
     private bool waiting;
     private float matchTimer = 0f;
+    private float phaseTimer = 0f;
+    private int phase;
+    private int enemyRange;
+    private bool evenPhase;
 
     // Use this for initialization
     void Start()
     {
+        phase = 0;
+        enemyRange = 0;
+        //matchTime = 60*gameManager.matchTime;
+        //phaseTime = 60*gameManager.phaseTime;
         matchTime = gameManager.matchTime;
+        phaseTime = gameManager.phaseTime;
         SpawnEnemy();
     }
 
@@ -29,17 +39,45 @@ public class EnemyManager : MonoBehaviour
     void FixedUpdate()
     {
         matchTimer += Time.fixedDeltaTime;
+        phaseTimer += Time.fixedDeltaTime;
+        if(phaseTimer>phaseTime)
+        {
+            if (phase % 2 == 0)
+                evenPhase = true;
+            else
+            {
+                evenPhase = false;
+                if (enemyRange < enemyPrefabs.Length-1)
+                    enemyRange++;
+            }
+            phase++;
+            Debug.Log("starting phase : " + phase);
+            phaseTimer = 0f;
+        }
     }
 
     void SpawnEnemy()
     {
+        //Randomly selecting one of the spawn Points
         int i = Random.Range(0, spawnPoints.Length);
-        float p = Random.Range(0f, (float)enemyPrefabs.Length);
+
+        //Randomly selecting a enemy
+        /*
+        float p = Random.Range(0f, (float)phase);
         p += (matchTimer / matchTime);
         int prob = (int)Mathf.Round(p);
-
-        if (prob > 1)
-            prob--;
+        */
+        int prob;
+        if (evenPhase)
+        {
+            prob = enemyRange;
+        }
+        else
+        {
+            prob = Random.Range(0, enemyRange+1);
+        }
+        //if (prob > 1)
+        //    prob--;
 
         //Debug.Log("spwaning enemy at position: " + i);
 
@@ -48,6 +86,7 @@ public class EnemyManager : MonoBehaviour
         newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
         playerId *= -1;
 
+        // wait sometime before spawning next enemy
         StartCoroutine(SpawnNewEnemy(delayTime));
     }
 
