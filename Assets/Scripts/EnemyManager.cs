@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     //public int numOfEnemies = 0;
     public int startTime = 1;
     public int delayTime = 3;
+    public int maxEnemiesCount = 5;
     public GameManager gameManager;
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
@@ -58,36 +59,43 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        //Randomly selecting one of the spawn Points
-        int i = Random.Range(0, spawnPoints.Length);
-
-        //Randomly selecting a enemy
-        /*
-        float p = Random.Range(0f, (float)phase);
-        p += (matchTimer / matchTime);
-        int prob = (int)Mathf.Round(p);
-        */
-        int prob;
-        if (evenPhase)
+        //count no. of enemies on screen
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        int enemyCount = enemies.Length;
+        //Debug.Log("No. of Enemies previously on screen : " + enemyCount);
+        if (enemyCount < maxEnemiesCount)
         {
-            prob = enemyRange;
+            //Randomly selecting one of the spawn Points
+            int i = Random.Range(0, spawnPoints.Length);
+
+            //Randomly selecting a enemy
+            /*
+            float p = Random.Range(0f, (float)phase);
+            p += (matchTimer / matchTime);
+            int prob = (int)Mathf.Round(p);
+            */
+            int prob;
+            if (evenPhase)
+            {
+                prob = enemyRange;
+            }
+            else
+            {
+                prob = Random.Range(0, enemyRange + 1);
+            }
+            //if (prob > 1)
+            //    prob--;
+
+            //Debug.Log("spwaning enemy at position: " + i);
+
+            Debug.Log(prob);
+            GameObject newEnemy = Instantiate(enemyPrefabs[prob], spawnPoints[i].position, Quaternion.identity);
+            newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
+            playerId *= -1;
+
+            // wait sometime before spawning next enemy
+            StartCoroutine(SpawnNewEnemy(delayTime));
         }
-        else
-        {
-            prob = Random.Range(0, enemyRange+1);
-        }
-        //if (prob > 1)
-        //    prob--;
-
-        //Debug.Log("spwaning enemy at position: " + i);
-
-        //Debug.Log(prob);
-        GameObject newEnemy = Instantiate(enemyPrefabs[prob], spawnPoints[i].position, Quaternion.identity);
-        newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
-        playerId *= -1;
-
-        // wait sometime before spawning next enemy
-        StartCoroutine(SpawnNewEnemy(delayTime));
     }
 
     IEnumerator SpawnNewEnemy(float timeToWait)
