@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public bool isFacingRight = true;
     public bool isInAir = false;
     public bool isInDefenseMode;
+    public bool playerIsHit;
 
     public Animator animator;
 
@@ -59,7 +60,6 @@ public class PlayerController : MonoBehaviour
     {
         //if (!canMove)
         //    return;
-
         isInDefenseMode = par.defenseMode;
 
         if (isInAir && transform.position.y <= initialPosition.y)
@@ -138,11 +138,14 @@ public class PlayerController : MonoBehaviour
         bool isInDefence = par.defenseMode;
         if (isInDefence)
             return;
-        //animator.SetTrigger("hit");
+        //animator.SetBool("hit",true);
+        animator.SetTrigger("hit 0");
+        playerIsHit = true;
         playerHealth -= damageAmount;
         print("Player Health :" + playerHealth);
         par.ResetScoreMultipler();
-
+        animator.SetBool("idle", true);
+        playerIsHit = false;
         if (playerHealth <= 0)
         {
             // player die anim here
