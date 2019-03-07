@@ -43,7 +43,7 @@ public class EnemyManager : MonoBehaviour
 
         //Debug.Log("spwaning enemy at position: " + i);
 
-        Debug.Log(prob);
+        //Debug.Log(prob);
         GameObject newEnemy = Instantiate(enemyPrefabs[prob], spawnPoints[i].position, Quaternion.identity);
         newEnemy.GetComponent<EnemyAI>().followPlayer = playerId;
         playerId *= -1;

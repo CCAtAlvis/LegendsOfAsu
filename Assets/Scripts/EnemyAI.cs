@@ -82,11 +82,11 @@ public class EnemyAI : MonoBehaviour
                 Flip();
 
             transform.position = Vector2.MoveTowards(transform.position, nearerOffset, speed * Time.deltaTime);
-            animator.SetBool("walk", true);
+            //animator.SetBool("walk", true);
         }
         else
         {
-            animator.SetBool("walk", false);
+            //animator.SetBool("walk", false);
         }
     }
 
@@ -99,11 +99,53 @@ public class EnemyAI : MonoBehaviour
         transform.localScale = scale;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Collider2D col = collision.collider;
+        if (col.tag.Equals("Player"))
+        {
+            enemyInRange = true;
+
+            pc = col.gameObject.GetComponent<PlayerController>();
+            followPlayer = pc.playerId;
+            target = col.gameObject.transform;
+
+            //some shit happening here "works hopefully"
+            //first wait for some random time
+            didEnemyHit = true;
+        }
+    }
+
     void OnCollisionStay2D(Collision2D collision)
     {
+        if (isEnemyPaused)
+            return;
+
+        if (didEnemyHit && pc != null)
+        {
+            //then get the distance between player and enemy
+            if (Vector3.Distance(transform.position, pc.transform.position) <= offsetValue * 2)
+            {
+                //player takes damage
+                pc.TakeDamage(hitDamage);
+
+                //play the animation and while enemy is paused
+                animator.SetTrigger("attackPlayer");
+                StartCoroutine(PauseEnemyMovement(attackAnimTime));
+
+                //pause the enemy for some more time
+                //float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime);
+                //StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
+                pc = null;
+            }
+
+            didEnemyHit = false;
+            return;
+        }
+
         if (Vector2.Distance(nearerOffset, transform.position) > 0)
         {
-            Debug.Log("IF");
+            //Debug.Log("IF");
             
             if (transform.position.x < target.position.x && !facingRight)
                 Flip();
@@ -115,31 +157,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("PlayerInRange");
-            if (isEnemyPaused)
-                return;
-
-            if (didEnemyHit && pc != null)
-            {
-                //then get the distance between player and enemy
-                if (Vector3.Distance(transform.position, pc.transform.position) <= offsetValue * 2)
-                {
-                    //player takes damage
-                    pc.TakeDamage(hitDamage);
-
-                    //play the animation and while enemy is paused
-                    animator.SetTrigger("attackPlayer");
-                    StartCoroutine(PauseEnemyMovement(attackAnimTime));
-
-                    //pause the enemy for some more time
-                    float pTime = Random.Range(afterAttackPauseTime - 0.5f, afterAttackPauseTime);
-                    StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
-                    pc = null;
-                }
-
-                didEnemyHit = false;
-                return;
-            }
+            //Debug.Log("PlayerInRange");
 
             Collider2D col = collision.collider;
             if (col.tag.Equals("Player"))
@@ -162,14 +180,7 @@ public class EnemyAI : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        Collider2D col = collision.collider;
-        if (col.gameObject.tag.Equals("Player"))
-        {
-            Debug.Log("triggerExit");
-            //animator.SetBool("attackPlayer", false);
-            //animator.SetBool("walk", true);
-            animator.SetBool("idle", true);
-        }
+        //animator.SetBool("walk", true);
     }
 
     public void TakeDamage(int damageAmount)
@@ -180,14 +191,14 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             //play enemy die animation here
-            animator.SetTrigger("dead");
+            //animator.SetTrigger("dead");
             //then destroy the game object
             Destroy(gameObject);
         }
 
         //play the animation and while enemy is paused
         //animator.SetBool("hit",true);
-        animator.SetTrigger("hit");
+        //animator.SetTrigger("hit");
         StartCoroutine(PauseEnemyMovement(hitAnimTime));
 
         StartCoroutine(PauseEnemyMovement(takeDamagePauseTime));
@@ -196,8 +207,8 @@ public class EnemyAI : MonoBehaviour
     IEnumerator PauseEnemyMovement(float pauseDuration)
     {
         isEnemyPaused = true;
-        animator.SetBool("idle", true);
         yield return new WaitForSeconds(pauseDuration);
         isEnemyPaused = false;
+        //animator.SetBool("walk", true);
     }
 }
