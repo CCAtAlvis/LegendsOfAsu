@@ -33,6 +33,7 @@ public class PlayerAttackRange : MonoBehaviour
     public bool enemyInRange = false;
     public bool defenseMode;
     public bool inAir;
+    public bool playerIsHit;
 
     public Animator animator;
     public LayerMask whatIsEnemies;
@@ -103,7 +104,7 @@ public class PlayerAttackRange : MonoBehaviour
         hitTimer += Time.deltaTime;
 
         //simple attack
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown(basicAttackKey))
+        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown(basicAttackKey))&& !playerIsHit)
         {
             animator.SetBool("slashAttack", true);
             Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
