@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
             return;
         //animator.SetTrigger("hit");
         playerHealth -= damageAmount;
+        print("Player Health :" + playerHealth);
         par.ResetScoreMultipler();
 
         if (playerHealth <= 0)
