@@ -223,10 +223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  playerHealth: 50
+  playerHealth: 10
   disableTime: 10
   isPlayerDisable: 0
-  fadeAlpha: 50
+  fadeAlpha: 10
   force: 500
   jumpForce: 500
   jumpHeight: 10
@@ -235,7 +235,7 @@ MonoBehaviour:
   isInDefenseMode: 0
   isPlayerHit: 0
   animator: {fileID: 8545145771917605715}
-  sprite: {fileID: 0}
+  sprite: {fileID: 8545145771917605714}
   rb: {fileID: 8545145771917605719}
   par: {fileID: 8545145771917605718}
   boxCollider: {fileID: 8545145771917605713}
@@ -251,13 +251,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4cf6cf890e7cc4fad64fd7aabc5de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttackPower: 1
-  basicAttackPower: 2
-  powerAttackPower: 3
+  playerAttackPower: 2
+  basicAttackPower: 3
+  powerAttackPower: 5
   allSideAttackPower: 1
   basicAttackRangeX: 1
   powerAttackRangeX: 3
-  allSideAttackRadius: 1
+  allSideAttackRadius: 1.5
   attackRangeY: 1
   powerAttackPressTime: 3
   allSideAttackPressTime: 1

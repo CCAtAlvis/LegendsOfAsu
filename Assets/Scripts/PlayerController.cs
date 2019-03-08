@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private int playerHealthMax;
     public float disableTime = 10;
     public bool isPlayerDisable = false;
-    public int fadeAlpha = 50;
+    public float fadeAlpha = 50;
 
     public float force = 10f;
     public float jumpForce = 400f;
@@ -143,6 +143,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        if (isPlayerDisable)
+            return;
+
         if (!isPlayerDisable)
         {
             bool isInDefence = par.defenseMode;
@@ -174,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator PlayerDisable(float pauseDuration)
     {
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, fadeAlpha);
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.5f);
         isPlayerDisable = true;
         Debug.Log("waiting");
         animator.SetFloat("Speed", 0.0f);

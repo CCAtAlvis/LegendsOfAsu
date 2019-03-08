@@ -112,6 +112,24 @@ public class PlayerAttackRange : MonoBehaviour
 
         hitTimer += Time.deltaTime;
 
+
+        if (Input.GetButtonUp(powerAttackKey))
+        {
+            animator.SetBool("slashAttack", true);
+            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+
+            if (enemiesToHit.Length != 0)
+            {
+                enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
+                enemy.TakeDamage(playerAttackPower);
+
+                gameManager.AddScore(baseScore * scoreMultipler);
+                hitCount++;
+                didPlayerHit = true;
+            }
+        }
+
+
         //all side attack
         if (Input.GetButton(allSideAttackKey) && !isPlayerHit && !isPlayerDisable)
         {
@@ -138,47 +156,47 @@ public class PlayerAttackRange : MonoBehaviour
         }
 
         //power attack
-        if (Input.GetButton(powerAttackKey) && !isPlayerHit && !isPlayerDisable)
-        {
-            animator.SetBool("heavyAttack", true);
-            powerAttackTimer += Time.deltaTime;
+        //if (Input.GetButton(powerAttackKey) && !isPlayerHit && !isPlayerDisable)
+        //{
+        //    animator.SetBool("heavyAttack", true);
+        //    powerAttackTimer += Time.deltaTime;
 
-            if (powerAttackTimer >= powerAttackPressTime)
-            {
-                animator.SetBool("heavyAttack", true);
-                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(powerAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
-                for (int i = 0; i < enemiesToHit.Length; i++)
-                {
-                    enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
-                    enemy.TakeDamage(powerAttackPower);
+        //    if (powerAttackTimer >= powerAttackPressTime)
+        //    {
+        //        animator.SetBool("heavyAttack", true);
+        //        Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(powerAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+        //        for (int i = 0; i < enemiesToHit.Length; i++)
+        //        {
+        //            enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+        //            enemy.TakeDamage(powerAttackPower);
 
-                    gameManager.AddScore(baseScore * scoreMultipler);
-                    hitCount++;
-                    didPlayerHit = true;
-                }
-                powerAttackTimer = 0;
-            }
-        }
-        if (Input.GetButtonUp(powerAttackKey))
-        {
-            if (powerAttackTimer < powerAttackPressTime)
-            {
-                animator.SetBool("slashAttack", true);
-                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+        //            gameManager.AddScore(baseScore * scoreMultipler);
+        //            hitCount++;
+        //            didPlayerHit = true;
+        //        }
+        //        powerAttackTimer = 0;
+        //    }
+        //}
+        //if (Input.GetButtonUp(powerAttackKey))
+        //{
+        //    if (powerAttackTimer < powerAttackPressTime)
+        //    {
+        //        animator.SetBool("slashAttack", true);
+        //        Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
 
-                if (enemiesToHit.Length != 0)
-                {
-                    enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
-                    enemy.TakeDamage(playerAttackPower);
+        //        if (enemiesToHit.Length != 0)
+        //        {
+        //            enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
+        //            enemy.TakeDamage(playerAttackPower);
 
-                    gameManager.AddScore(baseScore * scoreMultipler);
-                    hitCount++;
-                    didPlayerHit = true;
-                }
-            }
+        //            gameManager.AddScore(baseScore * scoreMultipler);
+        //            hitCount++;
+        //            didPlayerHit = true;
+        //        }
+        //    }
 
-            powerAttackTimer = 0f;
-        }
+        //    powerAttackTimer = 0f;
+        //}
 
 
         if (Input.GetButton(defenceKey) && !isPlayerHit && !isPlayerDisable)
