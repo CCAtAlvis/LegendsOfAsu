@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class PlayerController : MonoBehaviour
     public int playerId = 1;
     public int playerHealth = 10;
     private int playerHealthMax;
+    public float disableTime = 10;
+    public bool isPlayerDisable = false;
+    public int fadeAlpha = 50;
 
     public float force = 10f;
     public float jumpForce = 400f;
@@ -17,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool isPlayerHit;
 
     public Animator animator;
+    public SpriteRenderer sprite;
 
     [SerializeField]
     public Rigidbody2D rb;
@@ -65,7 +70,7 @@ public class PlayerController : MonoBehaviour
         //    return;
         isInDefenseMode = par.defenseMode;
 
-        if (isInAir && transform.position.y <= initialPosition.y)
+        if (isInAir && transform.position.y <= initialPosition.y && !isPlayerDisable)
         {
             //Debug.Log("Transform Position :" + transform.position.y);
             Debug.Log(initialPosition.y + " : " + transform.position.y);
@@ -77,7 +82,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector2(transform.position.x, initialPosition.y);
             boxCollider.enabled = true;
         }
-        else if (!isInAir)
+        else if (!isInAir && !isPlayerDisable)
         {
             //Debug.Log("not in air and not in defence mode");
 
@@ -138,24 +143,47 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        bool isInDefence = par.defenseMode;
-        if (isInDefence)
-            return;
+        if (!isPlayerDisable)
+        {
+            bool isInDefence = par.defenseMode;
+            if (isInDefence)
+                return;
 
-        //animator.SetBool("hit",true);
-        animator.SetTrigger("hit 0");
-        isPlayerHit = true;
-        playerHealth -= damageAmount;
-        print("Player Health :" + playerHealth);
-        par.ResetScoreMultipler();
-        animator.SetBool("idle", true);
-        isPlayerHit = false;
+            //animator.SetBool("hit",true);
+            animator.SetTrigger("hit 0");
+            isPlayerHit = true;
+            playerHealth -= damageAmount;
+            print("Player Health :" + playerHealth);
+            par.ResetScoreMultipler();
+            animator.SetBool("idle", true);
+            isPlayerHit = false;
+        }
 
         if (playerHealth <= 0)
         {
+            if (!isPlayerDisable)
+            {
+                Debug.Log("playerIsDisabled");
+                StartCoroutine(PlayerDisable(disableTime));
+            }
             // player die anim here
             // respawn player with playerHealth = playerHealthMax
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
         }
+    }
+
+    IEnumerator PlayerDisable(float pauseDuration)
+    {
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, fadeAlpha);
+        isPlayerDisable = true;
+        Debug.Log("waiting");
+
+        yield return new WaitForSeconds(pauseDuration + 0.1f);
+
+        playerHealth = playerHealthMax;
+        Debug.Log("finished waiting");
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 255);
+        isPlayerDisable = false;
+        //Destroy(gameObject);
     }
 }
