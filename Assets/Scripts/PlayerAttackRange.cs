@@ -87,8 +87,11 @@ public class PlayerAttackRange : MonoBehaviour
         animator.SetBool("defense", false);
 
         if (isPlayerDisable)
+        {
             animator.SetBool("idle", true);
-
+            return;
+        }
+        
         if (hitTimer >= maxTimeWithoutHit)
         {
             ResetScoreMultipler();

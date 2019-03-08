@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  playerHealth: 10
+  playerHealth: 50
   disableTime: 10
   isPlayerDisable: 0
   fadeAlpha: 10
