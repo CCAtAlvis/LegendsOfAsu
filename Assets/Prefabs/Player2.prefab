@@ -179,6 +179,7 @@ MonoBehaviour:
   isPlayerHit: 0
   animator: {fileID: 6192916975699168562}
   sprite: {fileID: 5208965250783547395}
+  healthBar: {fileID: 0}
   rb: {fileID: 1683030993648082173}
   par: {fileID: 8149208489045848313}
   boxCollider: {fileID: 5626006344954259907}
