@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: -1
-  playerHealth: 10
+  playerHealth: 50
   disableTime: 10
   isPlayerDisable: 0
   fadeAlpha: 50
@@ -204,7 +204,7 @@ MonoBehaviour:
   attackRangeY: 1
   powerAttackPressTime: 5
   allSideAttackPressTime: 5
-  baseScore: 100
+  baseScore: 10
   baseScoreMultiplerHits: 10
   maxTimeWithoutHit: 10
   baiscAttackPos: {fileID: 2279978923574839213}
@@ -215,6 +215,8 @@ MonoBehaviour:
   inAir: 0
   isPlayerHit: 0
   isPlayerDisable: 0
+  isAnimationPlaying: 0
+  waitTime: 3
   animator: {fileID: 6192916975699168562}
   whatIsEnemies:
     serializedVersion: 2

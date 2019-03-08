@@ -98,22 +98,22 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
 
-            if (Input.GetButtonDown(jump))
-            {
-                Vector2 lastVelocity = rb.velocity;
-                //Debug.Log("last Velocity " + lastVelocity);
-                //Debug.Log("Space Pressed");
-                isInAir = true;
-                animator.SetBool("inAir", true);
-                initialPosition = transform.position;
-                //Debug.Log("initialPosition" + initialPosition);
+            //if (Input.GetButtonDown(jump))
+            //{
+            //    Vector2 lastVelocity = rb.velocity;
+            //    //Debug.Log("last Velocity " + lastVelocity);
+            //    //Debug.Log("Space Pressed");
+            //    isInAir = true;
+            //    animator.SetBool("inAir", true);
+            //    initialPosition = transform.position;
+            //    //Debug.Log("initialPosition" + initialPosition);
 
-                //Debug.Log("Multiplying Vector " + lastVelocity);
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
+            //    //Debug.Log("Multiplying Vector " + lastVelocity);
+            //    rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
 
-                rb.gravityScale = 2f;
-                boxCollider.enabled = false;
-            }
+            //    rb.gravityScale = 2f;
+            //    boxCollider.enabled = false;
+            //}
         }
     }
 
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("hit 0");
             isPlayerHit = true;
             playerHealth -= damageAmount;
-            print("Player Health :" + playerHealth);
+            //print("Player Health :" + playerHealth);
             par.ResetScoreMultipler();
             animator.SetBool("idle", true);
             isPlayerHit = false;
@@ -177,6 +177,10 @@ public class PlayerController : MonoBehaviour
         sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, fadeAlpha);
         isPlayerDisable = true;
         Debug.Log("waiting");
+        animator.SetFloat("Speed", 0.0f);
+        animator.SetBool("idle", true);
+
+        rb.velocity = Vector2.zero; 
 
         yield return new WaitForSeconds(pauseDuration + 0.1f);
 

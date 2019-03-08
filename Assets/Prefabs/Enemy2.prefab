@@ -95,17 +95,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followPlayer: 0
-  hitDamage: 1
+  hitDamage: 5
   enemyHealth: 20
-  offsetValue: 1.3
+  offsetValue: 1
   speed: 1.4
   afterAttackPauseTime: 2
   takeDamagePauseTime: 3
   beforeFlipPauseTime: 1.1
   deathAnimTime: 1
   isEnemyDead: 0
-  attackAnimTime: 10
-  hitAnimTime: 10
+  attackAnimTime: 3
+  hitAnimTime: 3
   animator: {fileID: 8039150738959939898}
 --- !u!95 &8039150738959939898
 Animator:

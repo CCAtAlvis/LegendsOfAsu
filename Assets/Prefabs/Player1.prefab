@@ -223,7 +223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  playerHealth: 1000
+  playerHealth: 50
+  disableTime: 10
+  isPlayerDisable: 0
+  fadeAlpha: 50
   force: 500
   jumpForce: 500
   jumpHeight: 10
@@ -232,6 +235,7 @@ MonoBehaviour:
   isInDefenseMode: 0
   isPlayerHit: 0
   animator: {fileID: 8545145771917605715}
+  sprite: {fileID: 0}
   rb: {fileID: 8545145771917605719}
   par: {fileID: 8545145771917605718}
   boxCollider: {fileID: 8545145771917605713}
@@ -257,7 +261,7 @@ MonoBehaviour:
   attackRangeY: 1
   powerAttackPressTime: 3
   allSideAttackPressTime: 1
-  baseScore: 100
+  baseScore: 10
   baseScoreMultiplerHits: 10
   maxTimeWithoutHit: 10
   baiscAttackPos: {fileID: 8545145772041568299}
@@ -267,6 +271,9 @@ MonoBehaviour:
   defenseMode: 0
   inAir: 0
   isPlayerHit: 0
+  isPlayerDisable: 0
+  isAnimationPlaying: 0
+  waitTime: 3
   animator: {fileID: 8545145771917605715}
   whatIsEnemies:
     serializedVersion: 2

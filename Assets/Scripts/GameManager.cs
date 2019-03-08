@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public int matchTime = 300;
     public int phaseTime = 1;
     public Text scoreText;
-    public GameObject endScreen;
+    public GameObject endScreen; 
     public Text finalScoreText;
     private int score = 0;
 

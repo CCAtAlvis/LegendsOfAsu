@@ -95,9 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followPlayer: 0
-  hitDamage: 1
+  hitDamage: 2
   enemyHealth: 10
-  offsetValue: 1.3
+  offsetValue: 1
   speed: 1.4
   afterAttackPauseTime: 2
   takeDamagePauseTime: 3

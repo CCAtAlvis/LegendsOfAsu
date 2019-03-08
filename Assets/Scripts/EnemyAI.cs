@@ -122,13 +122,14 @@ public class EnemyAI : MonoBehaviour
             followPlayer = pc.playerId;
             target = col.gameObject.transform;
 
-            //player takes damage
-            pc.TakeDamage(hitDamage);
-
             //play the animation and while enemy is paused
             animator.SetBool("idle", false);
             animator.SetTrigger("attackPlayer");
             StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
+
+            //player takes damage
+            pc.TakeDamage(hitDamage);
+            pc = null;
         }
     }
 
@@ -143,13 +144,14 @@ public class EnemyAI : MonoBehaviour
             followPlayer = pc.playerId;
             target = col.gameObject.transform;
 
-            //player takes damage
-            pc.TakeDamage(hitDamage);
-
             //play the animation and while enemy is paused
             animator.SetBool("idle", false);
             animator.SetTrigger("attackPlayer");
             StartCoroutine(PauseEnemyMovement(afterAttackPauseTime));
+
+            //player takes damage
+            pc.TakeDamage(hitDamage);
+            pc = null;
         }
     }
 
