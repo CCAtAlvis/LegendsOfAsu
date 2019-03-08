@@ -97,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 157649361161110204}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ccad83f5217f1947940eeca4f7adb05, type: 2}
+  m_Controller: {fileID: 9100000, guid: ec3fef0e9e2d3654c9297dba526b9e85, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -173,6 +173,7 @@ MonoBehaviour:
   isFacingRight: 1
   isInAir: 0
   isInDefenseMode: 0
+  playerIsHit: 0
   animator: {fileID: 6192916975699168562}
   rb: {fileID: 1683030993648082173}
   par: {fileID: 8149208489045848313}
@@ -207,6 +208,7 @@ MonoBehaviour:
   enemyInRange: 0
   defenseMode: 0
   inAir: 0
+  playerIsHit: 0
   animator: {fileID: 6192916975699168562}
   whatIsEnemies:
     serializedVersion: 2
