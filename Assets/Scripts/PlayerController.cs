@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         //if (!canMove)
         //    return;
+
         isInDefenseMode = par.defenseMode;
 
         if (isInAir && transform.position.y <= initialPosition.y && !isPlayerDisable)
@@ -121,6 +122,17 @@ public class PlayerController : MonoBehaviour
     {
         isFacingRight = !isFacingRight;
         transform.localScale *= new Vector2(-1, 1);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Collider2D col = collision.collider;
+        if(col.tag.Equals("Player"))
+        {
+            canMove = false;
+            rb.velocity = Vector2.zero;
+
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

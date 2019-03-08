@@ -216,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61407923}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -1.94, z: 0}
+  m_LocalPosition: {x: -0, y: -1.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 68602803}
@@ -794,6 +794,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626006344954259907, guid: 520b35e4360f3f64f90f0e4c5956f693,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 2.1146054
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626006344954259907, guid: 520b35e4360f3f64f90f0e4c5956f693,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3.304292
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364534390558259828, guid: 520b35e4360f3f64f90f0e4c5956f693,
+        type: 3}
+      propertyPath: isFacingRight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8149208489045848313, guid: 520b35e4360f3f64f90f0e4c5956f693,
         type: 3}
@@ -1766,7 +1781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37599c3e472230c429cf3131972290d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchTime: 3
+  matchTime: 300
   phaseTime: 60
   scoreText: {fileID: 1741455125}
   endScreen: {fileID: 1662988141}
