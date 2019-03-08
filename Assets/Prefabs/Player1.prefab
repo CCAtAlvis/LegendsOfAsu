@@ -88,7 +88,7 @@ Transform:
   m_GameObject: {fileID: 8545145771917605712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.43, y: -2.69, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 8545145772041568299}
   - {fileID: 8545145772312513979}
@@ -223,13 +223,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  playerHealth: 10
+  playerHealth: 1000
   force: 500
   jumpForce: 500
   jumpHeight: 10
   isFacingRight: 1
   isInAir: 0
   isInDefenseMode: 0
+  isPlayerHit: 0
   animator: {fileID: 8545145771917605715}
   rb: {fileID: 8545145771917605719}
   par: {fileID: 8545145771917605718}
@@ -248,22 +249,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAttackPower: 1
   basicAttackPower: 2
-  longAttackPower: 3
-  radiusAttackPower: 1
+  powerAttackPower: 3
+  allSideAttackPower: 1
   basicAttackRangeX: 1
-  longAttackRangeX: 3
-  attackRadius: 1.5
+  powerAttackRangeX: 3
+  allSideAttackRadius: 1
   attackRangeY: 1
-  longAttackPressTime: 5
+  powerAttackPressTime: 5
+  allSideAttackPressTime: 5
   baseScore: 100
   baseScoreMultiplerHits: 10
   maxTimeWithoutHit: 10
-  attackPos: {fileID: 8545145772041568299}
-  longAttackPos: {fileID: 8545145772312513979}
+  baiscAttackPos: {fileID: 8545145772041568299}
+  powerAttackPos: {fileID: 8545145772312513979}
   allSideAttackPos: {fileID: 8545145771232686170}
   enemyInRange: 0
   defenseMode: 0
   inAir: 0
+  isPlayerHit: 0
   animator: {fileID: 8545145771917605715}
   whatIsEnemies:
     serializedVersion: 2
@@ -337,7 +340,7 @@ GameObject:
   - component: {fileID: 8545145772312513979}
   - component: {fileID: 8545145772312513978}
   m_Layer: 0
-  m_Name: longAttack
+  m_Name: powerAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public bool isFacingRight = true;
     public bool isInAir = false;
     public bool isInDefenseMode;
-    public bool playerIsHit;
+    public bool isPlayerHit;
 
     public Animator animator;
 
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private string horizontal;
     private string vertical;
+    private string jump;
 
     private bool canMove = true;
 
@@ -45,11 +46,13 @@ public class PlayerController : MonoBehaviour
         {
             horizontal = "HorizontalPlayer1";
             vertical = "VerticalPlayer1";
+            jump = "JumpPlayer1";
         }
         else
         {
             horizontal = "HorizontalPlayer2";
             vertical = "VerticalPlayer2";
+            jump = "JumpPlayer2";
         }
 
         playerHealthMax = playerHealth;
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown(jump))
             {
                 Vector2 lastVelocity = rb.velocity;
                 //Debug.Log("last Velocity " + lastVelocity);
@@ -123,9 +126,9 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("collision with other player");
             canMove = false;
         }
-        else if (col.tag.Equals("Enemy"))
-        {
-        }
+        //else if (col.tag.Equals("Enemy"))
+        //{
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -138,14 +141,16 @@ public class PlayerController : MonoBehaviour
         bool isInDefence = par.defenseMode;
         if (isInDefence)
             return;
+
         //animator.SetBool("hit",true);
         animator.SetTrigger("hit 0");
-        playerIsHit = true;
+        isPlayerHit = true;
         playerHealth -= damageAmount;
         print("Player Health :" + playerHealth);
         par.ResetScoreMultipler();
         animator.SetBool("idle", true);
-        playerIsHit = false;
+        isPlayerHit = false;
+
         if (playerHealth <= 0)
         {
             // player die anim here
