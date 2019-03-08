@@ -1513,21 +1513,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8545145771917605717, guid: 025bb210ce75bdd4e8393cde4d7b531a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8545145771917605717, guid: 025bb210ce75bdd4e8393cde4d7b531a,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8545145771917605716, guid: 025bb210ce75bdd4e8393cde4d7b531a,
-        type: 3}
-      propertyPath: playerHealth
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 8545145771917605718, guid: 025bb210ce75bdd4e8393cde4d7b531a,
         type: 3}
       propertyPath: gameManager

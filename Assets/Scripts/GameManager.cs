@@ -30,11 +30,16 @@ public class GameManager : MonoBehaviour
 
         if (timer >= matchTime)
         {
-            scoreText.enabled = false;
-            endScreen.SetActive(true);
-            finalScoreText.text = "Score: " + score;
-            matchEnd = true;
+            StopGame();
         }
+    }
+
+    public void StopGame()
+    {
+        scoreText.enabled = false;
+        endScreen.SetActive(true);
+        finalScoreText.text = "Score: " + score;
+        matchEnd = true;
     }
 
     public void AddScore(int scoreToAdd)

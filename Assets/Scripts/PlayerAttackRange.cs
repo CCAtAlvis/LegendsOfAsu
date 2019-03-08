@@ -5,17 +5,19 @@ public class PlayerAttackRange : MonoBehaviour
     public int playerAttackPower = 1;
 
     public int basicAttackPower = 2;
-    public int longAttackPower = 3;
-    public int radiusAttackPower = 1;
+    public int powerAttackPower = 3;
+    public int allSideAttackPower = 1;
 
     public float basicAttackRangeX = 1;
-    public float longAttackRangeX = 3;
-    public float attackRadius = 1;
-
+    public float powerAttackRangeX = 3;
+    public float allSideAttackRadius = 1;
     public float attackRangeY = 1;
 
-    public float longAttackPressTime = 5f;
-    private float longAttackTimer = 0f;
+    public float powerAttackPressTime = 5f;
+    private float powerAttackTimer = 0f;
+
+    public float allSideAttackPressTime = 5f;
+    private float allSideAttackTimer = 0f;
 
     public int baseScore = 100;
     public int baseScoreMultiplerHits = 10;
@@ -26,14 +28,14 @@ public class PlayerAttackRange : MonoBehaviour
     private float hitTimer = 0f;
     private bool didPlayerHit = false;
 
-    public Transform attackPos;
-    public Transform longAttackPos;
+    public Transform baiscAttackPos;
+    public Transform powerAttackPos;
     public Transform allSideAttackPos;
 
     public bool enemyInRange = false;
     public bool defenseMode;
     public bool inAir;
-    public bool playerIsHit;
+    public bool isPlayerHit;
 
     public Animator animator;
     public LayerMask whatIsEnemies;
@@ -44,7 +46,6 @@ public class PlayerAttackRange : MonoBehaviour
     private bool playerFacingRight;
 
     private string basicAttackKey;
-    private string longAttackKey;
     private string allSideAttackKey;
     private string powerAttackKey;
     private string defenceKey;
@@ -59,17 +60,15 @@ public class PlayerAttackRange : MonoBehaviour
         if (pc.playerId == 1)
         {
             basicAttackKey = "Fire1Player1";
-            longAttackKey = "Fire2Player1";
-            allSideAttackKey = "Fire3Player1";
-            powerAttackKey = "Fire3Player1";
+            allSideAttackKey = "Fire2Player1";
+            powerAttackKey = "Fire1Player1";
             defenceKey = "DefencePlayer1";
         }
         else
         {
             basicAttackKey = "Fire1Player2";
-            longAttackKey = "Fire2Player2";
-            allSideAttackKey = "Fire3Player2";
-            powerAttackKey = "Fire3Player2";
+            allSideAttackKey = "Fire2Player2";
+            powerAttackKey = "Fire1Player2";
             defenceKey = "DefencePlayer2";
         }
     }
@@ -104,10 +103,26 @@ public class PlayerAttackRange : MonoBehaviour
         hitTimer += Time.deltaTime;
 
         //simple attack
-        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown(basicAttackKey))&& !playerIsHit)
+        if (Input.GetButtonDown(basicAttackKey) && !isPlayerHit)
         {
             animator.SetBool("slashAttack", true);
-            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+
+            if(enemiesToHit.Length != 0)
+            {
+                enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
+                enemy.TakeDamage(playerAttackPower);
+
+                gameManager.AddScore(baseScore * scoreMultipler);
+                hitCount++;
+                didPlayerHit = true;
+            }
+        }
+
+        //all side attack
+        if (Input.GetButton(allSideAttackKey) && !isPlayerHit)
+        {
+            Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, allSideAttackRadius, whatIsEnemies);
 
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
@@ -120,47 +135,12 @@ public class PlayerAttackRange : MonoBehaviour
             }
         }
 
-        //
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetButton(powerAttackKey) && !isPlayerHit)
         {
-            //Debug.Log("R pressed");
-            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
-
-            for (int i = 0; i < enemiesToHit.Length; i++)
+            powerAttackTimer += Time.deltaTime;
+            if (powerAttackTimer >= powerAttackPressTime)
             {
-                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
-                enemy.TakeDamage(playerAttackPower);
-
-                gameManager.AddScore(baseScore * scoreMultipler);
-                hitCount++;
-                didPlayerHit = true;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, attackRadius, whatIsEnemies);
-
-            for (int i = 0; i < enemiesToHit.Length; i++)
-            {
-                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
-                enemy.TakeDamage(playerAttackPower);
-
-                gameManager.AddScore(baseScore * scoreMultipler);
-                hitCount++;
-                didPlayerHit = true;
-            }
-        }
-
-        if (Input.GetButton(longAttackKey))
-        {
-            longAttackTimer += Time.deltaTime;
-
-            if (longAttackTimer >= longAttackPressTime)
-            {
-                //TODO:
-                //do long attack
-                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(powerAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
 
                 for (int i = 0; i < enemiesToHit.Length; i++)
                 {
@@ -171,22 +151,22 @@ public class PlayerAttackRange : MonoBehaviour
                     hitCount++;
                     didPlayerHit = true;
                 }
-
+                powerAttackTimer = 0;
             }
         }
-        if (Input.GetButtonUp(longAttackKey))
+        if (Input.GetButtonUp(powerAttackKey))
         {
-            longAttackTimer = 0f;
+            powerAttackTimer = 0f;
         }
 
 
-        if (Input.GetKey(KeyCode.T))
+        if (Input.GetButton(defenceKey))
         {
             defenseMode = true;
             animator.SetBool("defense", true);
             //Debug.Log("defenseMode ON");
         }
-        if (Input.GetKeyUp(KeyCode.T))
+        if (Input.GetButtonUp(defenceKey))
         {
             //Debug.Log("defenseMode OFF");
             defenseMode = false;
@@ -196,11 +176,11 @@ public class PlayerAttackRange : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(attackPos.position, new Vector3(basicAttackRangeX, attackRangeY, 0));
+        Gizmos.DrawWireCube(baiscAttackPos.position, new Vector3(basicAttackRangeX, attackRangeY, 0));
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(longAttackPos.position, new Vector3(longAttackRangeX, attackRangeY, 0));
+        Gizmos.DrawWireCube(powerAttackPos.position, new Vector3(powerAttackRangeX, attackRangeY, 0));
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(allSideAttackPos.position, attackRadius);
+        Gizmos.DrawWireSphere(allSideAttackPos.position, allSideAttackRadius);
     }
 
     public void ResetScoreMultipler()
