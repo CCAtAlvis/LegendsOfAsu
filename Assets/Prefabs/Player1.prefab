@@ -255,8 +255,8 @@ MonoBehaviour:
   powerAttackRangeX: 3
   allSideAttackRadius: 1
   attackRangeY: 1
-  powerAttackPressTime: 5
-  allSideAttackPressTime: 5
+  powerAttackPressTime: 3
+  allSideAttackPressTime: 1
   baseScore: 100
   baseScoreMultiplerHits: 10
   maxTimeWithoutHit: 10

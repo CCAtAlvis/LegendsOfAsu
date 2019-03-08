@@ -77,6 +77,8 @@ public class PlayerAttackRange : MonoBehaviour
     {
         inAir = pc.isInAir;
         animator.SetBool("slashAttack", false);
+        animator.SetBool("magicAttack", false);
+        animator.SetBool("heavyAttack", false);
         animator.SetBool("defense", false);
 
         if (hitTimer >= maxTimeWithoutHit)
@@ -102,28 +104,11 @@ public class PlayerAttackRange : MonoBehaviour
 
         hitTimer += Time.deltaTime;
 
-        //simple attack
-        if (Input.GetButtonDown(basicAttackKey) && !isPlayerHit)
-        {
-            animator.SetBool("slashAttack", true);
-            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
-
-            if(enemiesToHit.Length != 0)
-            {
-                enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
-                enemy.TakeDamage(playerAttackPower);
-
-                gameManager.AddScore(baseScore * scoreMultipler);
-                hitCount++;
-                didPlayerHit = true;
-            }
-        }
-
-        //all side attack
+        //all side attack --- magic attack
         if (Input.GetButton(allSideAttackKey) && !isPlayerHit)
         {
+            animator.SetBool("magicAttack", false);
             Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, allSideAttackRadius, whatIsEnemies);
-
             for (int i = 0; i < enemiesToHit.Length; i++)
             {
                 enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
@@ -138,10 +123,13 @@ public class PlayerAttackRange : MonoBehaviour
         if (Input.GetButton(powerAttackKey) && !isPlayerHit)
         {
             powerAttackTimer += Time.deltaTime;
+        }
+        if (Input.GetButtonUp(powerAttackKey))
+        {
             if (powerAttackTimer >= powerAttackPressTime)
             {
+                animator.SetBool("heavyAttack", true);
                 Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(powerAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
-
                 for (int i = 0; i < enemiesToHit.Length; i++)
                 {
                     enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
@@ -153,9 +141,22 @@ public class PlayerAttackRange : MonoBehaviour
                 }
                 powerAttackTimer = 0;
             }
-        }
-        if (Input.GetButtonUp(powerAttackKey))
-        {
+            else
+            {
+                animator.SetBool("slashAttack", true);
+                Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+
+                if (enemiesToHit.Length != 0)
+                {
+                    enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
+                    enemy.TakeDamage(playerAttackPower);
+
+                    gameManager.AddScore(baseScore * scoreMultipler);
+                    hitCount++;
+                    didPlayerHit = true;
+                }
+            }
+
             powerAttackTimer = 0f;
         }
 
