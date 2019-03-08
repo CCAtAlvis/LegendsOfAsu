@@ -101,6 +101,9 @@ MonoBehaviour:
   speed: 1.4
   afterAttackPauseTime: 2
   takeDamagePauseTime: 3
+  beforeFlipPauseTime: 1.1
+  deathAnimTime: 1
+  isEnemyDead: 0
   attackAnimTime: 3
   hitAnimTime: 3
   animator: {fileID: 5635385344801552985}

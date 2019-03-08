@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerAttackRange : MonoBehaviour
 {
-    public int playerAttackPower = 1;
-
+    public int playerAttackPower = 3;
     public int basicAttackPower = 2;
     public int powerAttackPower = 3;
     public int allSideAttackPower = 1;
@@ -36,6 +36,9 @@ public class PlayerAttackRange : MonoBehaviour
     public bool defenseMode;
     public bool inAir;
     public bool isPlayerHit;
+    public bool isPlayerDisable;
+    public bool isAnimationPlaying = false;
+    public int waitTime = 3;
 
     public Animator animator;
     public LayerMask whatIsEnemies;
@@ -75,6 +78,8 @@ public class PlayerAttackRange : MonoBehaviour
 
     void Update()
     {
+        isPlayerDisable = pc.isPlayerDisable;
+        isPlayerHit = pc.isPlayerHit;
         inAir = pc.isInAir;
         animator.SetBool("slashAttack", false);
         animator.SetBool("magicAttack", false);
@@ -104,14 +109,15 @@ public class PlayerAttackRange : MonoBehaviour
 
         hitTimer += Time.deltaTime;
 
-        //all side attack --- magic attack
-        if (Input.GetButton(allSideAttackKey) && !isPlayerHit)
+        //simple attack
+        if (Input.GetButtonDown(basicAttackKey) && !isPlayerHit && !isPlayerDisable)
         {
-            animator.SetBool("magicAttack", false);
-            Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, allSideAttackRadius, whatIsEnemies);
-            for (int i = 0; i < enemiesToHit.Length; i++)
+            animator.SetBool("slashAttack", true);
+            Collider2D[] enemiesToHit = Physics2D.OverlapBoxAll(baiscAttackPos.position, new Vector2(basicAttackRangeX, attackRangeY), 0, whatIsEnemies);
+
+            if(enemiesToHit.Length != 0)
             {
-                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+                enemy = enemiesToHit[0].gameObject.GetComponent<EnemyAI>();
                 enemy.TakeDamage(playerAttackPower);
 
                 gameManager.AddScore(baseScore * scoreMultipler);
@@ -120,8 +126,28 @@ public class PlayerAttackRange : MonoBehaviour
             }
         }
 
-        if (Input.GetButton(powerAttackKey) && !isPlayerHit)
+        //all side attack
+        if (Input.GetButton(allSideAttackKey) && !isPlayerHit && !isPlayerDisable)
         {
+            animator.SetBool("magicAttack", true);
+            //isAnimationPlaying = true;
+            //StartCoroutine(WaitForAnimationComplete(waitTime));
+            Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(allSideAttackPos.position, allSideAttackRadius, whatIsEnemies);
+            for (int i = 0; i < enemiesToHit.Length; i++)
+            {
+                enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
+                enemy.TakeDamage(allSideAttackPower);
+
+                gameManager.AddScore(baseScore * scoreMultipler);
+                hitCount++;
+                didPlayerHit = true;
+            }
+        }
+
+        //power attack
+        if (Input.GetButton(powerAttackKey) && !isPlayerHit && !isPlayerDisable)
+        {
+            animator.SetBool("heavyAttack", true);
             powerAttackTimer += Time.deltaTime;
         }
         if (Input.GetButtonUp(powerAttackKey))
@@ -133,7 +159,7 @@ public class PlayerAttackRange : MonoBehaviour
                 for (int i = 0; i < enemiesToHit.Length; i++)
                 {
                     enemy = enemiesToHit[i].gameObject.GetComponent<EnemyAI>();
-                    enemy.TakeDamage(playerAttackPower);
+                    enemy.TakeDamage(powerAttackPower);
 
                     gameManager.AddScore(baseScore * scoreMultipler);
                     hitCount++;
@@ -161,7 +187,7 @@ public class PlayerAttackRange : MonoBehaviour
         }
 
 
-        if (Input.GetButton(defenceKey))
+        if (Input.GetButton(defenceKey) && !isPlayerHit && !isPlayerDisable)
         {
             defenseMode = true;
             animator.SetBool("defense", true);
@@ -188,5 +214,11 @@ public class PlayerAttackRange : MonoBehaviour
     {
         //Debug.Log("reset multupler");
         scoreMultipler = 1;
+    }
+    IEnumerator WaitForAnimationComplete(float pauseDuration)
+    {
+        isAnimationPlaying = true;
+        yield return new WaitForSeconds(pauseDuration + 0.1f);
+        isAnimationPlaying = false;
     }
 }
