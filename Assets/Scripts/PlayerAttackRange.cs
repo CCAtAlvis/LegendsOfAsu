@@ -76,6 +76,7 @@ public class PlayerAttackRange : MonoBehaviour
 
     void Update()
     {
+        playerIsHit = pc.playerIsHit;
         inAir = pc.isInAir;
         animator.SetBool("slashAttack", false);
         animator.SetBool("defense", false);
