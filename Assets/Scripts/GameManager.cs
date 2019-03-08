@@ -6,9 +6,13 @@ public class GameManager : MonoBehaviour
 {
     public int matchTime = 300;
     public int phaseTime = 1;
+
     public Text scoreText;
+    public Text matchTimerText;
+
     public GameObject endScreen; 
     public Text finalScoreText;
+
     private int score = 0;
 
     private float timer = 0f;
@@ -32,6 +36,9 @@ public class GameManager : MonoBehaviour
         {
             StopGame();
         }
+
+        int min = (int)timer / 60;
+        matchTimerText.text = (min).ToString() + ":" + ((int)(timer - 60 * min)).ToString();
     }
 
     public void StopGame()

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private int playerHealthMax;
     public float disableTime = 10;
     public bool isPlayerDisable = false;
-    public float fadeAlpha = 50;
+    //public float fadeAlpha = 50;
 
     public float force = 10f;
     public float jumpForce = 400f;
