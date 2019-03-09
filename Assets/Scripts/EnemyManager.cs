@@ -14,12 +14,17 @@ public class EnemyManager : MonoBehaviour
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
 
+    public bool cameraTransition;
+    public float pauseTransitionTime;
+    public bool transition = false;
     private int playerId = 1;
     private int matchTime;
     private int phaseTime;
+    private float phaseOneTime;
     private bool waiting;
     private float matchTimer = 0f;
     private float phaseTimer = 0f;
+    private float phaseOneTimer = 0f;
     private int phase;
     private int enemyRange;
     private bool evenPhase;
@@ -32,6 +37,7 @@ public class EnemyManager : MonoBehaviour
         //matchTime = 60*gameManager.matchTime;
         //phaseTime = 60*gameManager.phaseTime;
         matchTime = gameManager.matchTime;
+        phaseOneTime = gameManager.phaseOneTime;
         phaseTime = gameManager.phaseTime;
         SpawnEnemy();
     }
@@ -41,6 +47,15 @@ public class EnemyManager : MonoBehaviour
     {
         matchTimer += Time.fixedDeltaTime;
         phaseTimer += Time.fixedDeltaTime;
+        phaseOneTimer += Time.fixedDeltaTime;
+        if(phaseOneTimer>phaseOneTime)
+        {
+            transition = true;
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            int enemyCount = enemies.Length;
+            if(enemyCount==0)
+                StartCoroutine(Transition(pauseTransitionTime));
+        }
         if(phaseTimer>phaseTime)
         {
             if (phase % 2 == 0)
@@ -59,6 +74,8 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnEnemy()
     {
+        if (transition)
+            return;
         //count no. of enemies on screen
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         int enemyCount = enemies.Length;
@@ -102,5 +119,14 @@ public class EnemyManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToWait);
         SpawnEnemy();
+    }
+
+    IEnumerator Transition(float pauseDuration)
+    {
+        phaseOneTime = 1000f;
+        yield return new WaitForSeconds(pauseDuration + 0.1f);
+        transition = false;
+        cameraTransition = true;
+        delayTime = 15;
     }
 }
