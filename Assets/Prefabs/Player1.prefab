@@ -226,7 +226,6 @@ MonoBehaviour:
   playerHealth: 50
   disableTime: 10
   isPlayerDisable: 0
-  fadeAlpha: 10
   force: 500
   jumpForce: 500
   jumpHeight: 10
@@ -236,6 +235,7 @@ MonoBehaviour:
   isPlayerHit: 0
   animator: {fileID: 8545145771917605715}
   sprite: {fileID: 8545145771917605714}
+  healthBar: {fileID: 0}
   rb: {fileID: 8545145771917605719}
   par: {fileID: 8545145771917605718}
   boxCollider: {fileID: 8545145771917605713}

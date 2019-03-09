@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private int playerHealthMax;
     public float disableTime = 10;
     public bool isPlayerDisable = false;
-    public float fadeAlpha = 50;
+    //public float fadeAlpha = 50;
 
     public float force = 10f;
     public float jumpForce = 400f;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
     public SpriteRenderer sprite;
+    public Slider healthBar;
 
     [SerializeField]
     public Rigidbody2D rb;
@@ -46,6 +48,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         par = GetComponent<PlayerAttackRange>();
         boxCollider = GetComponent<BoxCollider2D>();
+
+        playerHealthMax = playerHealth;
 
         if (playerId == 1)
         {
@@ -116,6 +120,8 @@ public class PlayerController : MonoBehaviour
             //    boxCollider.enabled = false;
             //}
         }
+
+        healthBar.value = (float)playerHealth / (float)playerHealthMax;
     }
 
     private void Flip()

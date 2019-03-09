@@ -140,7 +140,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.24829662, y: 1.9458325}
+  m_Offset: {x: -0.24829662, y: 2.1146054}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -151,7 +151,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.755028, y: 2.9667459}
+  m_Size: {x: 2.755028, y: 3.304292}
   m_EdgeRadius: 0
 --- !u!114 &3364534390558259828
 MonoBehaviour:
@@ -169,16 +169,16 @@ MonoBehaviour:
   playerHealth: 50
   disableTime: 10
   isPlayerDisable: 0
-  fadeAlpha: 50
   force: 500
   jumpForce: 500
   jumpHeight: 10
-  isFacingRight: 0
+  isFacingRight: 1
   isInAir: 0
   isInDefenseMode: 0
   isPlayerHit: 0
   animator: {fileID: 6192916975699168562}
   sprite: {fileID: 5208965250783547395}
+  healthBar: {fileID: 0}
   rb: {fileID: 1683030993648082173}
   par: {fileID: 8149208489045848313}
   boxCollider: {fileID: 5626006344954259907}
