@@ -502,16 +502,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8545145771917605716, guid: 025bb210ce75bdd4e8393cde4d7b531a,
-        type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 2021194552}
     - target: {fileID: 8545145771917605718, guid: 025bb210ce75bdd4e8393cde4d7b531a,
         type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 2051972193}
+    - target: {fileID: 8545145771917605716, guid: 025bb210ce75bdd4e8393cde4d7b531a,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 2021194552}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 025bb210ce75bdd4e8393cde4d7b531a, type: 3}
 --- !u!1 &175288859
@@ -852,16 +852,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5626006344954259907, guid: 520b35e4360f3f64f90f0e4c5956f693,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 2.1146054
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626006344954259907, guid: 520b35e4360f3f64f90f0e4c5956f693,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 3.304292
-      objectReference: {fileID: 0}
     - target: {fileID: 3364534390558259828, guid: 520b35e4360f3f64f90f0e4c5956f693,
         type: 3}
       propertyPath: isFacingRight
@@ -877,6 +867,16 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 2051972193}
+    - target: {fileID: 5626006344954259907, guid: 520b35e4360f3f64f90f0e4c5956f693,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 2.1146054
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626006344954259907, guid: 520b35e4360f3f64f90f0e4c5956f693,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3.304292
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 520b35e4360f3f64f90f0e4c5956f693, type: 3}
 --- !u!1 &461591408
